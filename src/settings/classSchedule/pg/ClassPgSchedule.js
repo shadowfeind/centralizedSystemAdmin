@@ -101,7 +101,7 @@ const ClassPgSchedule = () => {
     if (!pgClassSchedule) {
       dispatch(getAllPgClassScheuleAction());
     }
-    if (pgClassSchedule) {
+    if (pgClassSchedule?.dbModelLst?.length > 0) {
       dispatch(getListClassScheuleAction(pgClassSchedule.dbModelLst[0]?.Id));
     }
   }, [pgClassSchedule]);
@@ -116,7 +116,7 @@ const ClassPgSchedule = () => {
     if (allClassScheduleList) {
       dispatch(
         getEditClassScheuleAction(
-          allClassScheduleList.dbModelLst[0].Id,
+          allClassScheduleList.dbModelLst[0]?.Id,
           allClassScheduleList.searchFilterModel.company
         )
       );

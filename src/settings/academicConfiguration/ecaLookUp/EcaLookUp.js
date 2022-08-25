@@ -205,9 +205,6 @@ const EcaLookUp = () => {
   }
 
   useEffect(() => {
-    if (!allEcaLookUp) {
-      dispatch(getAllEcaLookUpAction());
-    }
     if (allEcaLookUp) {
       setTableData(allEcaLookUp.dbModelLst);
     }
@@ -236,6 +233,10 @@ const EcaLookUp = () => {
       setOpenPopup(true);
     }
   }, [singleEditEcaLookUpSuccess]);
+
+  useEffect(() => {
+    dispatch(getAllEcaLookUpAction());
+  }, []);
 
   return (
     <>
