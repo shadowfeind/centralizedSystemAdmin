@@ -1,0 +1,32 @@
+.ledgerResult {
+  margin-top: 40px;
+}
+.ledgerResult table {
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.ledgerResult thead tr {
+  background-color: #f3f3f3;
+  color: #707478;
+  text-align: left;
+  font-weight: bold;
+}
+.ledgerResult th,
+.ledgerResult td {
+  border: 1px solid #000;
+  padding: 4px 8px;
+  font-weight: lighter;
+}
+
+@media print {
+  .ledgerResult {
+    padding:16px !important;
+  }
+  .ledger-header-print {
+    font-size: 12px !important;
+    font-weight: bolder !important;
+  }
+.print-button-hide {
+  display: none !important;
+}
+}

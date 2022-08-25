@@ -1,0 +1,134 @@
+.resultContainer {
+  width: 950px;
+  height: 1350px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  border: 3px solid #000;
+  padding: 25px;
+}
+.imageContainer {
+  text-align: center;
+}
+
+.resultContainer h1 {
+  background-color: #f6f9fa !important;
+  font: bold;
+  font-size: 26px;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 800;
+  padding-top: 10px;
+  padding-bottom: 6px;
+  color: #707478;
+  margin: 0;
+}
+.resultContainer h2 {
+  background-color: #e0e0ef !important;
+  font: bold;
+  font-size: 24px;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 400;
+  font-weight: bold;
+  color: #707478;
+  margin: 0;
+}
+.resultContainer h5 {
+  color: #707478;
+  font-size: 20px;
+  margin: 0;
+  padding: 10px 15px;
+}
+.spanResult {
+  font-weight: lighter;
+}
+.uppderTableResult table {
+  border-collapse: collapse;
+  font-size: 16px;
+}
+.uppderTableResult thead tr {
+  background-color: #f3f3f3;
+  color: #707478;
+  /* text-align: left; */
+  font-weight: bold;
+}
+.uppderTableResult th,
+.uppderTableResult td {
+  border: 1px solid #000;
+  padding: 7px 15px;
+  font-weight: lighter;
+}
+
+.lowerTableResult table {
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.lowerTableResult thead tr {
+  background-color: #f3f3f3;
+  color: #707478;
+  text-align: left;
+  font-weight: bold;
+}
+.lowerTableResult th,
+.lowerTableResult td {
+  border: 1px solid #000;
+  padding: 7px 15px;
+  font-weight: lighter;
+}
+.signatureContainer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.signatureContainer h4,
+.signatureContainer h6 {
+  margin: 0 !important;
+}
+.signatureContainer h6 {
+  font-size: 14px;
+}
+
+@media print {
+  .print-button-hide {
+    display: none !important;
+  }
+  
+  .resultContainer {
+    page-break-before: always;
+    width: 773px;
+    height: 1090px;
+    margin: 10px auto;
+    padding: 0 10px 10px 10px;
+  }
+  .resultContainer .subjectTable h1 {
+    font-size: 18px !important;
+    padding: 6px !important;
+  }
+  .resultContainer h2 {
+    font-size: 16px;
+  }
+  .resultContainer h5 {
+    font-size: 12px;
+    padding: 8px 15px;
+  }
+  .uppderTableResult table {
+    font-size: 12px;
+  }
+  .uppderTableResult table {
+    width: 100%;
+  }
+  .lowerTableResult table {
+    width: 95%;
+  }
+  .lowerTableResult {
+    margin-top: -12px;
+  }
+  .signatureContainer h6 {
+    font-size: 12px;
+  }
+  .lowerTableResult th,
+  .lowerTableResult td {
+    font-size: 11px;
+    padding: 7px;
+  }
+}

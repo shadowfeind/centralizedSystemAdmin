@@ -1,0 +1,57 @@
+
+.admitCard {
+  height: 70.2mm !important;
+  padding: 2mm !important;
+  margin: 2mm !important;
+  border: 1px solid #000 !important;
+  border-radius: 10px !important;
+}
+
+.admitCard-Top h3 {
+  text-align: center;
+  padding: 2px;
+  background-color : #eaeff5;
+  /* margin-bottom:  -10px; */
+  font-size: 12px;
+}
+.admitCard-Bottom h4 {
+  text-align: center;
+  font-size: 12px !important;
+  margin-top: 5px;
+}
+.admitCard-Bottom h5 {
+  font-size: 11px !important;
+  margin: 2px !important;
+} 
+.admitCard-Bottom h5 {
+  font-size: 9px;
+ font-weight: lighter;
+ margin-top: 20px;
+ border-top: 1px soild #000 !important;
+} 
+
+@media print {
+  /* styling goes here */
+ #card-print, .card-print-hide-cancel {
+   display: none !important;
+ }
+ 
+
+  @-moz-document url-prefix() {
+    /* #test-print-blueberry {
+     margin-top: 0.25;
+   } */
+    * {
+      box-sizing: border-box !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .admitCard {
+      height: 70.2mm !important;
+      padding: 2mm !important;
+      margin: 2.5mm !important;
+      border: 1px solid #000 !important;
+      border-radius: 10px !important;
+    }
+  }
+}

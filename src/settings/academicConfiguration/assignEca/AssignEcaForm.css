@@ -1,0 +1,18 @@
+.main-content {
+    border: 1px solid;
+    padding: 10px;
+    border-collapse: collapse;
+  }
+  .main-content th {
+    border: 0.2px solid;
+    text-align: center;
+  }
+  
+  .main-content td {
+    border: 1px solid;
+    padding: 8px;
+  }
+  
+  .main-content td:first-child {
+    text-align: center;
+  }
