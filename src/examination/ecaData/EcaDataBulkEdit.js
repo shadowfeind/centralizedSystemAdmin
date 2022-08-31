@@ -11,11 +11,13 @@ import {
   FormControl,
   InputLabel,
   Select,
+  DialogContent,
 } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { useDispatch } from "react-redux";
 import { postBulkEditEcaAction } from "./EcaDataActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -184,80 +186,74 @@ const EcaDataBulkEdit = ({
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell width="10%">Roll No.</StyledTableCell>
-              <StyledTableCell width="15%">Student Name</StyledTableCell>
-              {selectSubject &&
-                selectSubject?.map((subject, i) => (
-                  <StyledTableCell width="15%" key={i}>
-                    {subject.ECAName}
-                  </StyledTableCell>
+      <DialogContent>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell width="10%">Roll No.</StyledTableCell>
+                <StyledTableCell width="15%">Student Name</StyledTableCell>
+                {selectSubject &&
+                  selectSubject?.map((subject, i) => (
+                    <StyledTableCell width="15%" key={i}>
+                      {subject.ECAName}
+                    </StyledTableCell>
+                  ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {bulk &&
+                bulk?.map((subject, index) => (
+                  <StyledTableRow key={index}>
+                    <StyledTableCell>{subject.RollNo}</StyledTableCell>
+                    <StyledTableCell>{subject.FullName}</StyledTableCell>
+                    {ecaData &&
+                      ecaData?.map(
+                        (s, i) =>
+                          s.IDHREmployee === subject.IDHREmployee && (
+                            <StyledTableCell align="left" key={i}>
+                              <TextField
+                                defaultValue={s.ECAValue}
+                                label={s.ECAName}
+                                variant="outlined"
+                                name={s.ECAName}
+                                onChange={(e) =>
+                                  onChangeHandler(
+                                    s,
+                                    e.target.value,
+                                    e.target.name,
+                                    subject.IDHREmployee,
+                                    i
+                                  )
+                                }
+                              />
+                            </StyledTableCell>
+                          )
+                      )}
+                  </StyledTableRow>
                 ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {bulk &&
-              bulk?.map((subject, index) => (
-                <StyledTableRow key={index}>
-                  <StyledTableCell>{subject.RollNo}</StyledTableCell>
-                  <StyledTableCell>{subject.FullName}</StyledTableCell>
-                  {ecaData &&
-                    ecaData?.map(
-                      (s, i) =>
-                        s.IDHREmployee === subject.IDHREmployee && (
-                          <StyledTableCell align="left" key={i}>
-                            <TextField
-                              defaultValue={s.ECAValue}
-                              label={s.ECAName}
-                              variant="outlined"
-                              name={s.ECAName}
-                              onChange={(e) =>
-                                onChangeHandler(
-                                  s,
-                                  e.target.value,
-                                  e.target.name,
-                                  subject.IDHREmployee,
-                                  i
-                                )
-                              }
-                            />
-                          </StyledTableCell>
-                        )
-                    )}
-                </StyledTableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {bulk?.length <= 0 && (
-        <div>
-          <h3 style={{ color: "red", textAlign: "center" }}>No Data Found</h3>
-        </div>
-      )}
-      {errors.submit && (
-        <div
-          style={{
-            textAlign: "center",
-            color: "red",
-            fontSize: "12px",
-            paddingTop: "8px",
-          }}
-        >
-          {errors.submit}
-        </div>
-      )}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {bulk?.length <= 0 && (
+          <div>
+            <h3 style={{ color: "red", textAlign: "center" }}>No Data Found</h3>
+          </div>
+        )}
+        {errors.submit && (
+          <div
+            style={{
+              textAlign: "center",
+              color: "red",
+              fontSize: "12px",
+              paddingTop: "8px",
+            }}
+          >
+            {errors.submit}
+          </div>
+        )}
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -275,7 +271,7 @@ const EcaDataBulkEdit = ({
         >
           SUBMIT
         </Button>
-      </div>
+      </DialogFooter>
     </>
   );
 };

@@ -11,6 +11,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  DialogContent,
 } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -19,6 +20,7 @@ import {
   postBulkExamMarkApprovalAction,
 } from "./ExamMarkApprovalActions";
 import { useDispatch } from "react-redux";
+import DialogFooter from "../../components/DialogFooter";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -78,49 +80,56 @@ const ExamMarkApprovalBulkBlank = ({ bulkBlankData, search }) => {
   }, [bulkBlankData]);
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Roll No.</StyledTableCell>
-              <StyledTableCell align="right">Name Of Students</StyledTableCell>
-              <StyledTableCell align="right">Mark Obtained(TH)</StyledTableCell>
-              <StyledTableCell align="right">Mark Obtained(PT)</StyledTableCell>
-              <StyledTableCell align="right">Remarks</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {bulk &&
-              bulk?.map((subject, index) => (
-                <StyledTableRow key={subject.IDHREmployee}>
-                  <StyledTableCell component="th" scope="row">
-                    {subject.RollNo}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {subject.FullName}
-                  </StyledTableCell>
+      <DialogContent>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Roll No.</StyledTableCell>
+                <StyledTableCell align="right">
+                  Name Of Students
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  Mark Obtained(TH)
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  Mark Obtained(PT)
+                </StyledTableCell>
+                <StyledTableCell align="right">Remarks</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {bulk &&
+                bulk?.map((subject, index) => (
+                  <StyledTableRow key={subject.IDHREmployee}>
+                    <StyledTableCell component="th" scope="row">
+                      {subject.RollNo}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {subject.FullName}
+                    </StyledTableCell>
 
-                  <StyledTableCell align="right">
-                    <TextField
-                      id={`theory_${subject.IDHREmployee}`}
-                      name="ObtainedMark"
-                      value={handleInputChange}
-                      type="number"
-                      label="Obtained Mark"
-                      inputProps={{ tabIndex: "1" }}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    <TextField
-                      id={`practical_${subject.IDHREmployee}`}
-                      value={handleInputChange}
-                      name="ObtainedMarkPractical"
-                      type="number"
-                      label="Obtained Practical Mark"
-                      inputProps={{ tabIndex: "2" }}
-                    />
-                  </StyledTableCell>
-                  {/* <StyledTableCell align="right">
+                    <StyledTableCell align="right">
+                      <TextField
+                        id={`theory_${subject.IDHREmployee}`}
+                        name="ObtainedMark"
+                        value={handleInputChange}
+                        type="number"
+                        label="Obtained Mark"
+                        inputProps={{ tabIndex: "1" }}
+                      />
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <TextField
+                        id={`practical_${subject.IDHREmployee}`}
+                        value={handleInputChange}
+                        name="ObtainedMarkPractical"
+                        type="number"
+                        label="Obtained Practical Mark"
+                        inputProps={{ tabIndex: "2" }}
+                      />
+                    </StyledTableCell>
+                    {/* <StyledTableCell align="right">
                     <FormControl
                       variant="filled"
                       className={classes.formControl}
@@ -151,44 +160,37 @@ const ExamMarkApprovalBulkBlank = ({ bulkBlankData, search }) => {
                       </Select>
                     </FormControl>
                   </StyledTableCell> */}
-                  {/* <StyledTableCell align="right">
+                    {/* <StyledTableCell align="right">
                     {subject.FullMark}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     {subject.FullMarkPractical}
                   {/* </StyledTableCell> */}
-                </StyledTableRow>
-              ))}
-          </TableBody>
-        </Table>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            paddingTop: "10px",
-            marginTop: "10px",
-            borderTop: "1px solid #f3f3f3",
-          }}
+                  </StyledTableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </DialogContent>
+      <DialogFooter>
+        <Button
+          variant="contained"
+          color="secondary"
+          // onClick={() => setOpenBulkPopup(false)}
+          style={{ margin: "10px 0 0 10px" }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            // onClick={() => setOpenBulkPopup(false)}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            style={{ margin: "10px 0 0 10px" }}
-            onClick={formCheckSubmitHandler}
-          >
-            PRINT
-          </Button>
-        </div>
-      </TableContainer>
+          CANCEL
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          style={{ margin: "10px 0 0 10px" }}
+          onClick={formCheckSubmitHandler}
+        >
+          PRINT
+        </Button>
+      </DialogFooter>
     </>
   );
 };

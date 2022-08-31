@@ -1,5 +1,6 @@
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import React from "react";
+import DialogFooter from "../../components/DialogFooter";
 import AdmitCardDesign from "./AdmitCardDesign";
 
 const PrintAdminCardPrint = ({
@@ -18,34 +19,28 @@ const PrintAdminCardPrint = ({
 }) => {
   return (
     <div id="test-print-blueberry" ref={componentRef}>
-      <Grid container>
-        {students &&
-          students?.map((student) => (
-            <Grid item xs={6} key={student.$id}>
-              <AdmitCardDesign
-                key={student.$id}
-                student={student}
-                imagePath={imagePath}
-                classname={classname}
-                examDate={examDate}
-                headerBanners={headerBanners}
-                principleSignature={principleSignature}
-                year={year}
-                dateValue={dateValue}
-                yearDdl={yearDdl}
-              />
-            </Grid>
-          ))}
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+      <DialogContent>
+        <Grid container>
+          {students &&
+            students?.map((student) => (
+              <Grid item xs={6} key={student.$id}>
+                <AdmitCardDesign
+                  key={student.$id}
+                  student={student}
+                  imagePath={imagePath}
+                  classname={classname}
+                  examDate={examDate}
+                  headerBanners={headerBanners}
+                  principleSignature={principleSignature}
+                  year={year}
+                  dateValue={dateValue}
+                  yearDdl={yearDdl}
+                />
+              </Grid>
+            ))}
+        </Grid>
+      </DialogContent>
+      <DialogFooter>
         <Button
           onClick={() => setOpenPopup(false)}
           variant="contained"
@@ -63,7 +58,7 @@ const PrintAdminCardPrint = ({
         >
           PRINT
         </Button>
-      </div>
+      </DialogFooter>
     </div>
   );
 };

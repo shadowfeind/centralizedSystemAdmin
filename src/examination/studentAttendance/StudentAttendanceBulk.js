@@ -8,12 +8,14 @@ import {
   TableCell,
   Button,
   TextField,
+  DialogContent,
 } from "@material-ui/core";
 import { symbolsArrPhone } from "../../helpers/excludeSymbol";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { useDispatch } from "react-redux";
 import { postBulkStudentAttendanceAction } from "./StudentAttendanceActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -97,130 +99,124 @@ const StudentAttendanceBulk = ({
 
   return (
     <>
-      <div style={{ width: "300px", margin: "15px auto" }}>
-        Working Total Days:
-        <TextField
-          type="number"
-          onKeyDown={(e) =>
-            symbolsArrPhone.includes(e.key) && e.preventDefault()
-          }
-          // label="WorkingDayTotal"
-          variant="outlined"
-          name="WorkingDayTotal"
-          value={workingDays}
-          onChange={(e) => setWorkingDays(e.target.value)}
-          errors={errors.workingDays}
-        />
-      </div>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Roll No.</StyledTableCell>
-              <StyledTableCell align="left">FullName</StyledTableCell>
-              <StyledTableCell align="center">Present Days</StyledTableCell>
-              <StyledTableCell align="center">Absent Days</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {bulk &&
-              bulk?.map((subject, index) => (
-                <StyledTableRow key={subject.IDHREmployee}>
-                  <StyledTableCell component="th" scope="row">
-                    {subject.RollNo}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {subject.FullName}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <TextField
-                      id={`theory_${subject.IDHREmployee}`}
-                      value={subject.PresentDay}
-                      type="number"
-                      label="Present Day"
-                      variant="outlined"
-                      name="PresentDay"
-                      onKeyDown={(e) =>
-                        symbolsArr.includes(e.key) && e.preventDefault()
-                      }
-                      inputProps={{
-                        tabIndex: "1",
-                        style: { textAlign: "left" },
-                      }}
-                      onChange={(e) =>
-                        onChangeHandler(
-                          subject,
-                          e.target.value,
-                          e.target.name,
-                          index
-                        )
-                      }
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <TextField
-                      disabled
-                      id={`practical_${subject.IDHREmployee}`}
-                      value={
-                        workingDays -
-                        (subject.PresentDay !== null && subject.PresentDay)
-                      }
-                      type="number"
-                      label="Absent Day"
-                      variant="outlined"
-                      name="AbsentDay"
-                      onWheelCapture={(e) => {
-                        e.target.blur();
-                      }}
-                      onKeyDown={(e) =>
-                        symbolsArr.includes(e.key) && e.preventDefault()
-                      }
-                      inputProps={{
-                        tabIndex: "2",
-                        style: { textAlign: "left" },
-                      }}
-                      onChange={(e) =>
-                        e.target.value >= 0 &&
-                        onChangeHandler(
-                          subject,
-                          e.target.value,
-                          e.target.name,
-                          index
-                        )
-                      }
-                    />
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {bulk?.length <= 0 && (
-        <div>
-          <h3 style={{ color: "red", textAlign: "center" }}>No Data</h3>
+      <DialogContent>
+        <div style={{ width: "300px", margin: "15px auto" }}>
+          Working Total Days:
+          <TextField
+            type="number"
+            onKeyDown={(e) =>
+              symbolsArrPhone.includes(e.key) && e.preventDefault()
+            }
+            // label="WorkingDayTotal"
+            variant="outlined"
+            name="WorkingDayTotal"
+            value={workingDays}
+            onChange={(e) => setWorkingDays(e.target.value)}
+            errors={errors.workingDays}
+          />
         </div>
-      )}
-      {errors.submit && (
-        <div
-          style={{
-            textAlign: "center",
-            color: "red",
-            fontSize: "12px",
-            paddingTop: "8px",
-          }}
-        >
-          {errors.submit}
-        </div>
-      )}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Roll No.</StyledTableCell>
+                <StyledTableCell align="left">FullName</StyledTableCell>
+                <StyledTableCell align="center">Present Days</StyledTableCell>
+                <StyledTableCell align="center">Absent Days</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {bulk &&
+                bulk?.map((subject, index) => (
+                  <StyledTableRow key={subject.IDHREmployee}>
+                    <StyledTableCell component="th" scope="row">
+                      {subject.RollNo}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {subject.FullName}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <TextField
+                        id={`theory_${subject.IDHREmployee}`}
+                        value={subject.PresentDay}
+                        type="number"
+                        label="Present Day"
+                        variant="outlined"
+                        name="PresentDay"
+                        onKeyDown={(e) =>
+                          symbolsArr.includes(e.key) && e.preventDefault()
+                        }
+                        inputProps={{
+                          tabIndex: "1",
+                          style: { textAlign: "left" },
+                        }}
+                        onChange={(e) =>
+                          onChangeHandler(
+                            subject,
+                            e.target.value,
+                            e.target.name,
+                            index
+                          )
+                        }
+                      />
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <TextField
+                        disabled
+                        id={`practical_${subject.IDHREmployee}`}
+                        value={
+                          workingDays -
+                          (subject.PresentDay !== null && subject.PresentDay)
+                        }
+                        type="number"
+                        label="Absent Day"
+                        variant="outlined"
+                        name="AbsentDay"
+                        onWheelCapture={(e) => {
+                          e.target.blur();
+                        }}
+                        onKeyDown={(e) =>
+                          symbolsArr.includes(e.key) && e.preventDefault()
+                        }
+                        inputProps={{
+                          tabIndex: "2",
+                          style: { textAlign: "left" },
+                        }}
+                        onChange={(e) =>
+                          e.target.value >= 0 &&
+                          onChangeHandler(
+                            subject,
+                            e.target.value,
+                            e.target.name,
+                            index
+                          )
+                        }
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {bulk?.length <= 0 && (
+          <div>
+            <h3 style={{ color: "red", textAlign: "center" }}>No Data</h3>
+          </div>
+        )}
+        {errors.submit && (
+          <div
+            style={{
+              textAlign: "center",
+              color: "red",
+              fontSize: "12px",
+              paddingTop: "8px",
+            }}
+          >
+            {errors.submit}
+          </div>
+        )}
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -238,7 +234,7 @@ const StudentAttendanceBulk = ({
         >
           SUBMIT
         </Button>
-      </div>
+      </DialogFooter>
     </>
   );
 };
