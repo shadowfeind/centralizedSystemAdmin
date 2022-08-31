@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import SelectControl from "../../../components/controls/SelectControl";
 import { postEcaLookUpAction, putEcaLookUpAction } from "./EcaLookUpActions";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDECA: 0,
@@ -76,53 +77,49 @@ const EcaLookUpForm = ({ ecaLookUp, ecaCreate, setOpenPopup }) => {
   const test = [{ Key: "", Values: "" }];
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="ECAName"
-            label="ECA Name*"
-            value={values.ECAName}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.ECAName}
-          />
-          <InputControl
-            name="ECADescription"
-            label="ECA Description"
-            value={values.ECADescription}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.ECADescription}
-          />
-          <SelectControl
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-            options={
-              ecaCreate
-                ? ecaCreate.ddlIsActive
-                : ecaLookUp
-                ? ecaLookUp.ddlIsActive
-                : test
-            }
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="ECAName"
+                label="ECA Name*"
+                value={values.ECAName}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.ECAName}
+              />
+              <InputControl
+                name="ECADescription"
+                label="ECA Description"
+                value={values.ECADescription}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.ECADescription}
+              />
+              <SelectControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                options={
+                  ecaCreate
+                    ? ecaCreate.ddlIsActive
+                    : ecaLookUp
+                    ? ecaLookUp.ddlIsActive
+                    : test
+                }
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -137,11 +134,12 @@ const EcaLookUpForm = ({ ecaLookUp, ecaCreate, setOpenPopup }) => {
           type="submit"
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { putReassociateStudentsAction } from "./ReassociateStudentActions";
 import SelectControl from "../../../components/controls/SelectControl";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDStudentFacultyLevel: "",
@@ -69,109 +70,106 @@ const ReassociateStudentSearchEditForm = ({
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Grid container style={{ fontSize: "12px" }}>
-          <Grid item xs={6}>
-            <InputControl
-              disabled
-              name="IDAdmissionRegistration"
-              label="Admission Registration"
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              value={studentName?.length > 0 && studentName[0].Value}
-            />
-            <SelectControl
-              name="IDYearFacultyLink"
-              label="Year Faculty Link"
-              value={values.IDYearFacultyLink}
-              options={
-                reassociateForm ? reassociateForm.ddlFacultyProgramLink : test
-              }
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              onChange={handleInputChange}
-              errors={errors.IDYearFacultyLink}
-            />
-            <SelectControl
-              name="IDLevel"
-              label="Class"
-              value={values.IDLevel}
-              options={reassociateForm ? reassociateForm.ddlClass : test}
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              onChange={handleInputChange}
-              errors={errors.IDLevel}
-            />
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                disabled
+                name="IDAdmissionRegistration"
+                label="Admission Registration"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={studentName?.length > 0 && studentName[0].Value}
+              />
+              <SelectControl
+                name="IDYearFacultyLink"
+                label="Year Faculty Link"
+                value={values.IDYearFacultyLink}
+                options={
+                  reassociateForm ? reassociateForm.ddlFacultyProgramLink : test
+                }
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.IDYearFacultyLink}
+              />
+              <SelectControl
+                name="IDLevel"
+                label="Class"
+                value={values.IDLevel}
+                options={reassociateForm ? reassociateForm.ddlClass : test}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.IDLevel}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <SelectControl
+                name="IDAcademicShift"
+                label="AcademicShift"
+                value={values.IDAcademicShift}
+                options={
+                  reassociateForm ? reassociateForm.ddlAcademicShift : test
+                }
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.IDAcademicShift}
+              />
+              <SelectControl
+                name="Section"
+                label="Section"
+                value={values.Section}
+                options={reassociateForm ? reassociateForm.ddlSection : test}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.Section}
+              />
+              <SelectControl
+                name="LevelStatus"
+                label="Class Status"
+                value={values.LevelStatus}
+                options={
+                  reassociateForm ? reassociateForm.ddlLevelStatus : test
+                }
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.LevelStatus}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <SelectControl
-              name="IDAcademicShift"
-              label="AcademicShift"
-              value={values.IDAcademicShift}
-              options={
-                reassociateForm ? reassociateForm.ddlAcademicShift : test
-              }
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              onChange={handleInputChange}
-              errors={errors.IDAcademicShift}
-            />
-            <SelectControl
-              name="Section"
-              label="Section"
-              value={values.Section}
-              options={reassociateForm ? reassociateForm.ddlSection : test}
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              onChange={handleInputChange}
-              errors={errors.Section}
-            />
-            <SelectControl
-              name="LevelStatus"
-              label="Class Status"
-              value={values.LevelStatus}
-              options={reassociateForm ? reassociateForm.ddlLevelStatus : test}
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              onChange={handleInputChange}
-              errors={errors.LevelStatus}
-            />
-          </Grid>
-        </Grid>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            paddingTop: "10px",
-            marginTop: "10px",
-            borderTop: "1px solid #f3f3f3",
-          }}
+        </Form>
+      </DialogContent>
+      <DialogFooter>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => setOpenPopupEdit(false)}
+          style={{ margin: "10px 0 0 10px" }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenPopupEdit(false)}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={active}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            {active ? "PROCESSING" : "SUBMIT"}
-          </Button>
-        </div>
-      </Form>
+          CANCEL
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={active}
+          style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
+        >
+          {active ? "PROCESSING" : "SUBMIT"}
+        </Button>
+      </DialogFooter>
     </>
   );
 };

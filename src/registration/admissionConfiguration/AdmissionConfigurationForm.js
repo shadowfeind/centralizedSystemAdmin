@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import { useForm, Form } from "../../customHooks/useForm";
 import { useDispatch } from "react-redux";
 import DatePickerControl from "../../components/controls/DatePickerControl";
@@ -7,6 +7,7 @@ import {
   createSingleAdmissionConfigAction,
   updateSingleAdmissionConfigAction,
 } from "./AdmissionConfigurationActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   IDFacultyConfiguration: 0,
@@ -111,36 +112,32 @@ const AdmissionConfigurationForm = ({
   }, [createAcademicConfig]);
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <DatePickerControl
-            name="AdmissionStartDate"
-            label="Admission Start Date"
-            value={values.AdmissionStartDate}
-            onChange={handleInputChange}
-            errors={errors.AdmissionStartDate}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <DatePickerControl
-            name="AdmissionEndDate"
-            label="Admission End Date"
-            value={values.AdmissionEndDate}
-            onChange={handleInputChange}
-            errors={errors.AdmissionEndDate}
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <DatePickerControl
+                name="AdmissionStartDate"
+                label="Admission Start Date"
+                value={values.AdmissionStartDate}
+                onChange={handleInputChange}
+                errors={errors.AdmissionStartDate}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <DatePickerControl
+                name="AdmissionEndDate"
+                label="Admission End Date"
+                value={values.AdmissionEndDate}
+                onChange={handleInputChange}
+                errors={errors.AdmissionEndDate}
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -154,12 +151,13 @@ const AdmissionConfigurationForm = ({
           color="primary"
           type="submit"
           disabled={active}
+          onClick={handleSubmit}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,8 @@ import {
   createAcademicYearCalendarPostAction,
   updateSingleAcademicYearCalendarAction,
 } from "./AcademicYearCalendarActions";
+
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDAcademicYearCalendar: 0,
@@ -84,83 +86,79 @@ const AcademicYearCalendarForm = ({
     }
   }, [singleAcademicYearCalendar]);
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <SelectControl
-            name="EventType"
-            label="Event Type"
-            value={values.EventType}
-            onChange={handleInputChange}
-            options={
-              createAcademicYearCalendarOptions
-                ? createAcademicYearCalendarOptions.ddlEventType
-                : singleAcademicYearCalendar
-                ? singleAcademicYearCalendar.ddlEventType
-                : fillerArray
-            }
-          />
-          <DatePickerControl
-            name="FromDate"
-            label="From Date"
-            value={values.FromDate}
-            onChange={handleInputChange}
-            errors={errors.FromDate}
-          />
-          <InputControl
-            name="EventName"
-            label="Event Name*"
-            value={values.EventName}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            variant="outlined"
-            errors={errors.EventName}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <SelectControl
-            name="EventStatus"
-            label="EventStatus"
-            value={values.EventStatus}
-            onChange={handleInputChange}
-            options={
-              createAcademicYearCalendarOptions
-                ? createAcademicYearCalendarOptions.ddlEventStatus
-                : singleAcademicYearCalendar
-                ? singleAcademicYearCalendar.ddlEventStatus
-                : fillerArray
-            }
-          />
-          <DatePickerControl
-            name="ToDate"
-            label="To Date"
-            value={values.ToDate}
-            onChange={handleInputChange}
-          />
-          <InputControl
-            name="EventDescription"
-            label="Event Description*"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.EventDescription}
-            variant="outlined"
-            onChange={handleInputChange}
-            errors={errors.EventDescription}
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <SelectControl
+                name="EventType"
+                label="Event Type"
+                value={values.EventType}
+                onChange={handleInputChange}
+                options={
+                  createAcademicYearCalendarOptions
+                    ? createAcademicYearCalendarOptions.ddlEventType
+                    : singleAcademicYearCalendar
+                    ? singleAcademicYearCalendar.ddlEventType
+                    : fillerArray
+                }
+              />
+              <DatePickerControl
+                name="FromDate"
+                label="From Date"
+                value={values.FromDate}
+                onChange={handleInputChange}
+                errors={errors.FromDate}
+              />
+              <InputControl
+                name="EventName"
+                label="Event Name*"
+                value={values.EventName}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                variant="outlined"
+                errors={errors.EventName}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <SelectControl
+                name="EventStatus"
+                label="EventStatus"
+                value={values.EventStatus}
+                onChange={handleInputChange}
+                options={
+                  createAcademicYearCalendarOptions
+                    ? createAcademicYearCalendarOptions.ddlEventStatus
+                    : singleAcademicYearCalendar
+                    ? singleAcademicYearCalendar.ddlEventStatus
+                    : fillerArray
+                }
+              />
+              <DatePickerControl
+                name="ToDate"
+                label="To Date"
+                value={values.ToDate}
+                onChange={handleInputChange}
+              />
+              <InputControl
+                name="EventDescription"
+                label="Event Description*"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.EventDescription}
+                variant="outlined"
+                onChange={handleInputChange}
+                errors={errors.EventDescription}
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -175,11 +173,12 @@ const AcademicYearCalendarForm = ({
           type="submit"
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

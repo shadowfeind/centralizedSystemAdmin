@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch } from "react-redux";
 import CheckBoxControl from "../../../components/controls/CheckBoxControl";
+
+import DialogFooter from "../../../components/DialogFooter";
 
 import {
   academicSubjectCreateAction,
@@ -114,121 +116,125 @@ const AcademicSubjectForm = ({ academicSubject }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="SubjectName"
-            label="Subject Name*"
-            value={values.SubjectName}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.SubjectName}
-          />
-        </Grid>
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="SubjectName"
+                label="Subject Name*"
+                value={values.SubjectName}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.SubjectName}
+              />
+            </Grid>
 
-        <Grid item xs={6}>
-          <InputControl
-            name="SubjectCode"
-            label="Subject Code*"
-            value={values.SubjectCode}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.SubjectCode}
-          />
-        </Grid>
-      </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="SubjectCode"
+                label="Subject Code*"
+                value={values.SubjectCode}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.SubjectCode}
+              />
+            </Grid>
+          </Grid>
 
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={12}>
-          <InputControl
-            name="SubjectDescription"
-            label="Subject Description*"
-            value={values.SubjectDescription}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.SubjectDescription}
-          />
-        </Grid>
-      </Grid>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={12}>
+              <InputControl
+                name="SubjectDescription"
+                label="Subject Description*"
+                value={values.SubjectDescription}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.SubjectDescription}
+              />
+            </Grid>
+          </Grid>
 
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <CheckBoxControl
-            name="IsCompulsory"
-            label="Mark As Compulsory"
-            value={values.IsCompulsory}
-            onChange={handleCompulsory}
-            errors={errors.IsCompulsory}
-          />
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <CheckBoxControl
+                name="IsCompulsory"
+                label="Mark As Compulsory"
+                value={values.IsCompulsory}
+                onChange={handleCompulsory}
+                errors={errors.IsCompulsory}
+              />
 
-          <CheckBoxControl
-            name="IsTheoritical"
-            label="Mark As Theoritical"
-            value={values.IsTheoritical}
-            onChange={handleTheory}
-            errors={errors.IsTheoritical}
-          />
+              <CheckBoxControl
+                name="IsTheoritical"
+                label="Mark As Theoritical"
+                value={values.IsTheoritical}
+                onChange={handleTheory}
+                errors={errors.IsTheoritical}
+              />
 
-          <CheckBoxControl
-            name="IsActive"
-            label="Is Active"
-            value={values.IsActive}
-            onChange={handleInputChange}
-            errors={errors.IsActive}
-          />
-        </Grid>
+              <CheckBoxControl
+                name="IsActive"
+                label="Is Active"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                errors={errors.IsActive}
+              />
+            </Grid>
 
-        <Grid item xs={6}>
-          <CheckBoxControl
-            name="IsOptional"
-            label="Mark As Optional"
-            value={values.IsOptional}
-            onChange={handleOptional}
-            errors={errors.IsOptional}
-          />
+            <Grid item xs={6}>
+              <CheckBoxControl
+                name="IsOptional"
+                label="Mark As Optional"
+                value={values.IsOptional}
+                onChange={handleOptional}
+                errors={errors.IsOptional}
+              />
 
-          <CheckBoxControl
-            name="IsPractical"
-            label="Mark As Practical"
-            value={values.IsPractical}
-            onChange={handlePractical}
-            errors={errors.IsPractical}
-          />
+              <CheckBoxControl
+                name="IsPractical"
+                label="Mark As Practical"
+                value={values.IsPractical}
+                onChange={handlePractical}
+                errors={errors.IsPractical}
+              />
 
-          <CheckBoxControl
-            name="IsShowInLedger"
-            label="Show Ledger"
-            value={values.IsShowInLedger}
-            onChange={handleInputChange}
-            errors={errors.IsShowInLedger}
-          />
-        </Grid>
-      </Grid>
+              <CheckBoxControl
+                name="IsShowInLedger"
+                label="Show Ledger"
+                value={values.IsShowInLedger}
+                onChange={handleInputChange}
+                errors={errors.IsShowInLedger}
+              />
+            </Grid>
+          </Grid>
 
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}></Grid>
-        <Grid item xs={6}>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              disabled={active}
-              style={{ margin: "10px 0 0 10px" }}
-            >
-              {active ? "PROCESSING" : "SUBMIT"}
-            </Button>
-          </div>
-        </Grid>
-      </Grid>
-    </Form>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}></Grid>
+            <Grid item xs={6}></Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={active}
+          style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
+        >
+          {active ? "PROCESSING" : "SUBMIT"}
+        </Button>
+      </DialogFooter>
+    </>
   );
 };
 export default AcademicSubjectForm;

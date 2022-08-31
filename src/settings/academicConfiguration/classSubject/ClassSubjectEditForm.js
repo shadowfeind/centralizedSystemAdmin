@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch } from "react-redux";
 import { symbolsArrPhone } from "../../../helpers/excludeSymbol";
 import { updateSingleClassSubjectAction } from "./ClassSubjectActions";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDClassSubject: 0,
@@ -46,47 +47,43 @@ const ClassSubjectEditForm = ({ singleClassSubject, setOpenPopupForm }) => {
     }
   }, [singleClassSubject]);
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            disabled
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            variant="filled"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            name="CreditHour"
-            label="Credit Hour"
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            value={values.CreditHour}
-            type="number"
-            variant="outlined"
-            required
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                disabled
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                variant="filled"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="CreditHour"
+                label="Credit Hour"
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                value={values.CreditHour}
+                type="number"
+                variant="outlined"
+                required
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -101,11 +98,12 @@ const ClassSubjectEditForm = ({ singleClassSubject, setOpenPopupForm }) => {
           type="submit"
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

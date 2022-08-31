@@ -11,11 +11,13 @@ import {
   FormControl,
   InputLabel,
   Select,
+  DialogContent,
 } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { useDispatch } from "react-redux";
 import { postStudentPresentListAction } from "./StudentMonthlyPresentSheetActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -104,58 +106,60 @@ const StudentMonthlyPresentSheetUpdateForm = ({ students, setOpenPopup }) => {
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Roll No. </StyledTableCell>
-              <StyledTableCell>Student Name</StyledTableCell>
-              <StyledTableCell>Mobile No.</StyledTableCell>
-              <StyledTableCell>Email ID</StyledTableCell>
+      <DialogContent>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Roll No. </StyledTableCell>
+                <StyledTableCell>Student Name</StyledTableCell>
+                <StyledTableCell>Mobile No.</StyledTableCell>
+                <StyledTableCell>Email ID</StyledTableCell>
 
-              <StyledTableCell>
-                <label>All</label>
-                <Checkbox
-                  checked={checked}
-                  color="primary"
-                  onChange={handleAllSelectChange}
-                />
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {stuAttendance &&
-              stuAttendance
-                .sort((a, b) => a.RollNo - b.RollNo)
-                .map((s) => (
-                  <StyledTableRow key={s.IDHREmployee}>
-                    <StyledTableCell component="th" scope="row">
-                      {s.RollNo}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {s.FullName}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {s.MobileNumber}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {s.EmailID}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      <Checkbox
-                        checked={s?.IsPresent || false}
-                        color="primary"
-                        name="IsPresent"
-                        onChange={(e) =>
-                          handleChange(e.target.checked, s.IDHREmployee)
-                        }
-                      />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                <StyledTableCell>
+                  <label>All</label>
+                  <Checkbox
+                    checked={checked}
+                    color="primary"
+                    onChange={handleAllSelectChange}
+                  />
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {stuAttendance &&
+                stuAttendance
+                  .sort((a, b) => a.RollNo - b.RollNo)
+                  .map((s) => (
+                    <StyledTableRow key={s.IDHREmployee}>
+                      <StyledTableCell component="th" scope="row">
+                        {s.RollNo}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {s.FullName}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {s.MobileNumber}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {s.EmailID}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        <Checkbox
+                          checked={s?.IsPresent || false}
+                          color="primary"
+                          name="IsPresent"
+                          onChange={(e) =>
+                            handleChange(e.target.checked, s.IDHREmployee)
+                          }
+                        />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </DialogContent>
       {stuAttendance?.length <= 0 && (
         <div>
           <h3 style={{ color: "red", textAlign: "center" }}>No Data Found</h3>
@@ -173,15 +177,7 @@ const StudentMonthlyPresentSheetUpdateForm = ({ students, setOpenPopup }) => {
           {errors.submit}
         </div>
       )}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -200,7 +196,7 @@ const StudentMonthlyPresentSheetUpdateForm = ({ students, setOpenPopup }) => {
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
+      </DialogFooter>
     </>
   );
 };

@@ -9,10 +9,12 @@ import {
   Checkbox,
   Button,
   TextField,
+  DialogContent,
 } from "@material-ui/core";
 import { symbolsArrPhoneDot } from "../../../helpers/excludeSymbol";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
+import DialogFooter from "../../../components/DialogFooter";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -108,88 +110,91 @@ const AssignFacultySubjectFormCreate = ({
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Subject Name </StyledTableCell>
-              <StyledTableCell align="right">Subject Code</StyledTableCell>
-              <StyledTableCell align="right">Compulsory</StyledTableCell>
-              <StyledTableCell align="right">Optional</StyledTableCell>
-              <StyledTableCell align="right">Practical</StyledTableCell>
-              <StyledTableCell align="right">Theoritical</StyledTableCell>
-              <StyledTableCell align="center">Credit Hour</StyledTableCell>
-              <StyledTableCell align="right">
-                All{" "}
-                <Checkbox
-                  className={classes.checkBox}
-                  onChange={(e) => handleBulkChange(e.target.checked)}
-                  name="checkedB"
-                  color="primary"
-                />
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {subjects &&
-              subjects?.map((subject) => (
-                <StyledTableRow key={subject.IDAcademicSubject}>
-                  <StyledTableCell component="th" scope="row">
-                    {subject.SubjectName}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {subject.SubjectCode}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {subject.IsCompulsory ? "True" : "False"}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {subject.IsOptional ? "True" : "False"}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {subject.IsPractical ? "True" : "False"}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {subject.IsTheoritical ? "True" : "False"}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    <TextField
-                      id={`subject_${subject.IDAcademicSubject}`}
-                      defaultValue={subject.CreditHour}
-                      onWheelCapture={(e) => {
-                        e.target.blur();
-                      }}
-                      type="number"
-                      label="Credit Hours"
-                      variant="outlined"
-                      onKeyDown={(e) =>
-                        symbolsArrPhoneDot.includes(e.key) && e.preventDefault()
-                      }
-                      onChange={(e) => inputHandler(subject, e.target.value)}
-                      inputProps={{ tabIndex: "1" }}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {" "}
-                    <Checkbox
-                      checked={
-                        formCheck?.filter(
-                          (x) =>
-                            x.IDAcademicSubject === subject.IDAcademicSubject
-                        )?.length > 0
-                          ? true
-                          : false
-                      }
-                      onChange={() => handleChange(subject)}
-                      name="checkedB"
-                      color="primary"
-                    />
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <DialogContent>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Subject Name </StyledTableCell>
+                <StyledTableCell align="right">Subject Code</StyledTableCell>
+                <StyledTableCell align="right">Compulsory</StyledTableCell>
+                <StyledTableCell align="right">Optional</StyledTableCell>
+                <StyledTableCell align="right">Practical</StyledTableCell>
+                <StyledTableCell align="right">Theoritical</StyledTableCell>
+                <StyledTableCell align="center">Credit Hour</StyledTableCell>
+                <StyledTableCell align="right">
+                  All{" "}
+                  <Checkbox
+                    className={classes.checkBox}
+                    onChange={(e) => handleBulkChange(e.target.checked)}
+                    name="checkedB"
+                    color="primary"
+                  />
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {subjects &&
+                subjects?.map((subject) => (
+                  <StyledTableRow key={subject.IDAcademicSubject}>
+                    <StyledTableCell component="th" scope="row">
+                      {subject.SubjectName}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {subject.SubjectCode}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {subject.IsCompulsory ? "True" : "False"}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {subject.IsOptional ? "True" : "False"}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {subject.IsPractical ? "True" : "False"}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {subject.IsTheoritical ? "True" : "False"}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      <TextField
+                        id={`subject_${subject.IDAcademicSubject}`}
+                        defaultValue={subject.CreditHour}
+                        onWheelCapture={(e) => {
+                          e.target.blur();
+                        }}
+                        type="number"
+                        label="Credit Hours"
+                        variant="outlined"
+                        onKeyDown={(e) =>
+                          symbolsArrPhoneDot.includes(e.key) &&
+                          e.preventDefault()
+                        }
+                        onChange={(e) => inputHandler(subject, e.target.value)}
+                        inputProps={{ tabIndex: "1" }}
+                      />
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {" "}
+                      <Checkbox
+                        checked={
+                          formCheck?.filter(
+                            (x) =>
+                              x.IDAcademicSubject === subject.IDAcademicSubject
+                          )?.length > 0
+                            ? true
+                            : false
+                        }
+                        onChange={() => handleChange(subject)}
+                        name="checkedB"
+                        color="primary"
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </DialogContent>
       {createErrors.formCheck && (
         <h4 style={{ color: "red" }}>{createErrors.formCheck}</h4>
       )}
@@ -214,15 +219,7 @@ const AssignFacultySubjectFormCreate = ({
           {errors?.submit}
         </div>
       )} */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -240,7 +237,7 @@ const AssignFacultySubjectFormCreate = ({
         >
           SUBMIT
         </Button>
-      </div>
+      </DialogFooter>
     </>
   );
 };

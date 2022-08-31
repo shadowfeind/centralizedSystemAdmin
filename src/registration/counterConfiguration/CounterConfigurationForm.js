@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../components/controls/InputControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import {
   counterConfigEditAction,
 } from "./CounterConfigurationActions";
 import { symbolsArrPhone } from "../../helpers/excludeSymbol";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   IDCounter: 0,
@@ -95,108 +96,104 @@ const CounterConfigurationForm = ({
   const symbolsArr = ["e", "E", "+", "-", ".", "ArrowUp", "ArrowDown"];
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="CounterYear"
-            label="Counter Year"
-            value={values.CounterYear}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            type="number"
-            variant="outlined"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            errors={errors.CounterYear}
-            onChange={handleInputChange}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="CounterYear"
+                label="Counter Year"
+                value={values.CounterYear}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                type="number"
+                variant="outlined"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                errors={errors.CounterYear}
+                onChange={handleInputChange}
+              />
 
-          <InputControl
-            name="Prefix"
-            label="Prefix"
-            value={values.Prefix}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            variant="outlined"
-            errors={errors.Prefix}
-            onChange={handleInputChange}
-          />
-          <InputControl
-            name="CurrentCount"
-            label="Current Count"
-            value={values.CurrentCount}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            type="number"
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            variant="outlined"
-            errors={errors.CurrentCount}
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <SelectControl
-            name="CounterFor"
-            label="Counter For"
-            value={values.CounterFor}
-            onChange={handleInputChange}
-            options={
-              counterFor
-                ? counterFor
-                : getAcademicConfigInitialDataForEdit
-                ? getAcademicConfigInitialDataForEdit.ddlCounterFor
-                : testValue
-            }
-          />
-          <InputControl
-            name="Middle"
-            label="Middle"
-            value={values.Middle}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            variant="outlined"
-            onChange={handleInputChange}
-            errors={errors.Middle}
-          />
+              <InputControl
+                name="Prefix"
+                label="Prefix"
+                value={values.Prefix}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                variant="outlined"
+                errors={errors.Prefix}
+                onChange={handleInputChange}
+              />
+              <InputControl
+                name="CurrentCount"
+                label="Current Count"
+                value={values.CurrentCount}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                type="number"
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                variant="outlined"
+                errors={errors.CurrentCount}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <SelectControl
+                name="CounterFor"
+                label="Counter For"
+                value={values.CounterFor}
+                onChange={handleInputChange}
+                options={
+                  counterFor
+                    ? counterFor
+                    : getAcademicConfigInitialDataForEdit
+                    ? getAcademicConfigInitialDataForEdit.ddlCounterFor
+                    : testValue
+                }
+              />
+              <InputControl
+                name="Middle"
+                label="Middle"
+                value={values.Middle}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                variant="outlined"
+                onChange={handleInputChange}
+                errors={errors.Middle}
+              />
 
-          <SelectControl
-            name="Status"
-            label="Status"
-            value={values.Status}
-            onChange={handleInputChange}
-            options={
-              counterStatus
-                ? counterStatus
-                : getAcademicConfigInitialDataForEdit
-                ? getAcademicConfigInitialDataForEdit.ddlCounterStatus
-                : testValue
-            }
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <SelectControl
+                name="Status"
+                label="Status"
+                value={values.Status}
+                onChange={handleInputChange}
+                options={
+                  counterStatus
+                    ? counterStatus
+                    : getAcademicConfigInitialDataForEdit
+                    ? getAcademicConfigInitialDataForEdit.ddlCounterStatus
+                    : testValue
+                }
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -214,8 +211,8 @@ const CounterConfigurationForm = ({
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

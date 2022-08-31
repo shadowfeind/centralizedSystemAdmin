@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import SelectControl from "../../../components/controls/SelectControl";
 import { putMobileUserAction } from "./MobileUsersActions";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   FirstName: "",
@@ -54,55 +55,50 @@ const MobileUsersForm = ({ mobileUser, setOpenPopup }) => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Grid container style={{ fontSize: "12px" }}>
-          <Grid item xs={6}>
-            <InputControl
-              name="FullName"
-              label="Full Name"
-              value={values.FullName}
-              onChange={handleInputChange}
-              errors={errors.FullName}
-            />
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="FullName"
+                label="Full Name"
+                value={values.FullName}
+                onChange={handleInputChange}
+                errors={errors.FullName}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <SelectControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                options={mobileUser ? mobileUser.ddlIsActive : test}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <SelectControl
-              name="IsActive"
-              label="IsActive"
-              value={values.IsActive}
-              onChange={handleInputChange}
-              options={mobileUser ? mobileUser.ddlIsActive : test}
-            />
-          </Grid>
-        </Grid>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            paddingTop: "10px",
-            marginTop: "10px",
-            borderTop: "1px solid #f3f3f3",
-          }}
+        </Form>
+      </DialogContent>
+      <DialogFooter>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => setOpenPopup(false)}
+          style={{ margin: "10px 0 0 10px" }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenPopup(false)}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={active}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            {active ? "PROCESSING" : "SUBMIT"}
-          </Button>
-        </div>
-      </Form>
+          CANCEL
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={active}
+          style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
+        >
+          {active ? "PROCESSING" : "SUBMIT"}
+        </Button>
+      </DialogFooter>
     </>
   );
 };

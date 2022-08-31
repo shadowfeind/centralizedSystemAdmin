@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../components/controls/InputControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,7 @@ import {
   CHECK_REGISTRATION_FOR_STUDENT_RESET,
   CHECK_ROLLNO_FOR_STUDENT_RESET,
 } from "./StudentRegistrationConstants";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   IDAdmissionRegistration: 0,
@@ -406,350 +407,346 @@ const StudentRegistrationForm = ({
   const symbolsArr = ["e", "E", "+", "-", ".", "ArrowUp", "ArrowDown"];
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <SelectControl
-            name="idAcademicYear"
-            label="Academic Year*"
-            value={values.idAcademicYear}
-            onChange={handleInputChange}
-            options={
-              singleStudent
-                ? singleStudent.ddlAcademicYear
-                : getCreateSingleStudentData
-                ? getCreateSingleStudentData.ddlAcademicYear
-                : gender
-            }
-            disabled={values?.IDAdmissionRegistration === 0 ? false : true}
-            errors={errors.idAcademicYear}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <SelectControl
+                name="idAcademicYear"
+                label="Academic Year*"
+                value={values.idAcademicYear}
+                onChange={handleInputChange}
+                options={
+                  singleStudent
+                    ? singleStudent.ddlAcademicYear
+                    : getCreateSingleStudentData
+                    ? getCreateSingleStudentData.ddlAcademicYear
+                    : gender
+                }
+                disabled={values?.IDAdmissionRegistration === 0 ? false : true}
+                errors={errors.idAcademicYear}
+              />
 
-          <SelectControl
-            name="IDLevel"
-            label="Class*"
-            value={values.IDLevel}
-            onChange={handleInputChange}
-            options={
-              singleStudent
-                ? singleStudent.ddlClass
-                : getCreateSingleStudentData
-                ? getCreateSingleStudentData.ddlClass
-                : gender
-            }
-            disabled={values?.IDAdmissionRegistration === 0 ? false : true}
-            errors={errors.IDLevel}
-          />
-          <InputControl
-            name="RegistrationKey"
-            label="Registration No.*"
-            value={values.RegistrationKey}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            onBlur={(e) =>
-              dispatch(checkRegistrationForStudentAction(e.target.value))
-            }
-            errors={errors.RegistrationKey}
-          />
-          {regCheckError && (
-            <h5
-              style={{
-                color: "red",
-                fontWeight: "normal",
-                margin: "0",
-                paddingLeft: "10px",
-                display: errors.RegistrationKey ? "none" : "block",
-              }}
-            >
-              {regCheckError}
-            </h5>
-          )}
-        </Grid>
-        <Grid item xs={6}>
-          <SelectControl
-            name="idFacultyProgramLink"
-            label="Faculty Path*"
-            value={values.idFacultyProgramLink}
-            onChange={handleInputChange}
-            disabled={values?.IDAdmissionRegistration === 0 ? false : true}
-            options={
-              singleStudent
-                ? singleStudent.ddlFacultyProgramLink
-                : getCreateSingleStudentData
-                ? getCreateSingleStudentData.ddlFacultyProgramLink
-                : gender
-            }
-          />
-          <SelectControl
-            name="Section"
-            label="Section*"
-            value={values.Section}
-            onChange={handleInputChange}
-            disabled={values?.IDAdmissionRegistration === 0 ? false : true}
-            options={
-              singleStudent
-                ? singleStudent.ddlSection
-                : getCreateSingleStudentData
-                ? getCreateSingleStudentData.ddlSection
-                : gender
-            }
-            errors={errors.Section}
-          />
-          <InputControl
-            name="RollNo"
-            label="Roll No.*"
-            value={values.RollNo}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            type="number"
-            onChange={handleInputChange}
-            onBlur={(e) => handleRollNo(e.target.value)}
-            errors={errors.RollNo}
-          />
-          {rollCheckError && (
-            <h5
-              style={{
-                color: "red",
-                fontWeight: "normal",
-                margin: "0",
-                paddingLeft: "10px",
-                display: errors.RollNo ? "none" : "block",
-              }}
-            >
-              {rollCheckError}
-            </h5>
-          )}
-        </Grid>
-      </Grid>
-      <h4>Personal Details</h4>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="FirstName"
-            label="First Name*"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.FirstName}
-            onChange={handleInputChange}
-            errors={errors.FirstName}
-          />
-          <InputControl
-            name="MiddleName"
-            label="Middle Name"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.MiddleName}
-            onChange={handleInputChange}
-          />
-          <InputControl
-            name="LastName"
-            label="Last Name*"
-            value={values.LastName}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.LastName}
-          />
-          <SelectControl
-            name="Gender"
-            label="Gender*"
-            value={values.Gender}
-            onChange={handleInputChange}
-            options={
-              singleStudent
-                ? singleStudent.ddlGender
-                : getCreateSingleStudentData
-                ? getCreateSingleStudentData.ddlGender
-                : gender
-            }
-            errors={errors.Gender}
-          />
-          <DatePickerControl
-            name="DOB"
-            label="Date Of Birth*"
-            value={values.DOB}
-            onChange={handleInputChange}
-            errors={errors.DOB}
-          />
-          <InputControl
-            name="PlaceOfBirth"
-            label="Place of Birth"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.PlaceOfBirth}
-            onChange={handleInputChange}
-          />
-          <InputControl
-            name="MobileNo"
-            label="Contact No.*"
-            value={values.MobileNo}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            onChange={handleInputChange}
-            type="number"
-            errors={errors.MobileNo}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            name="ImageUploaded"
-            // label="Select Profile Photo"
-            // value={values.ClassLocation}
-            // onChange={(e) => handleImage(e)}
-            onChange={(e) => fileValidation(e, setImage, setImgSrc)}
-            type="file"
-            // errors={errors.ClassLocation}
-          />
+              <SelectControl
+                name="IDLevel"
+                label="Class*"
+                value={values.IDLevel}
+                onChange={handleInputChange}
+                options={
+                  singleStudent
+                    ? singleStudent.ddlClass
+                    : getCreateSingleStudentData
+                    ? getCreateSingleStudentData.ddlClass
+                    : gender
+                }
+                disabled={values?.IDAdmissionRegistration === 0 ? false : true}
+                errors={errors.IDLevel}
+              />
+              <InputControl
+                name="RegistrationKey"
+                label="Registration No.*"
+                value={values.RegistrationKey}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                onBlur={(e) =>
+                  dispatch(checkRegistrationForStudentAction(e.target.value))
+                }
+                errors={errors.RegistrationKey}
+              />
+              {regCheckError && (
+                <h5
+                  style={{
+                    color: "red",
+                    fontWeight: "normal",
+                    margin: "0",
+                    paddingLeft: "10px",
+                    display: errors.RegistrationKey ? "none" : "block",
+                  }}
+                >
+                  {regCheckError}
+                </h5>
+              )}
+            </Grid>
+            <Grid item xs={6}>
+              <SelectControl
+                name="idFacultyProgramLink"
+                label="Faculty Path*"
+                value={values.idFacultyProgramLink}
+                onChange={handleInputChange}
+                disabled={values?.IDAdmissionRegistration === 0 ? false : true}
+                options={
+                  singleStudent
+                    ? singleStudent.ddlFacultyProgramLink
+                    : getCreateSingleStudentData
+                    ? getCreateSingleStudentData.ddlFacultyProgramLink
+                    : gender
+                }
+              />
+              <SelectControl
+                name="Section"
+                label="Section*"
+                value={values.Section}
+                onChange={handleInputChange}
+                disabled={values?.IDAdmissionRegistration === 0 ? false : true}
+                options={
+                  singleStudent
+                    ? singleStudent.ddlSection
+                    : getCreateSingleStudentData
+                    ? getCreateSingleStudentData.ddlSection
+                    : gender
+                }
+                errors={errors.Section}
+              />
+              <InputControl
+                name="RollNo"
+                label="Roll No.*"
+                value={values.RollNo}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                type="number"
+                onChange={handleInputChange}
+                onBlur={(e) => handleRollNo(e.target.value)}
+                errors={errors.RollNo}
+              />
+              {rollCheckError && (
+                <h5
+                  style={{
+                    color: "red",
+                    fontWeight: "normal",
+                    margin: "0",
+                    paddingLeft: "10px",
+                    display: errors.RollNo ? "none" : "block",
+                  }}
+                >
+                  {rollCheckError}
+                </h5>
+              )}
+            </Grid>
+          </Grid>
+          <h4>Personal Details</h4>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="FirstName"
+                label="First Name*"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.FirstName}
+                onChange={handleInputChange}
+                errors={errors.FirstName}
+              />
+              <InputControl
+                name="MiddleName"
+                label="Middle Name"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.MiddleName}
+                onChange={handleInputChange}
+              />
+              <InputControl
+                name="LastName"
+                label="Last Name*"
+                value={values.LastName}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.LastName}
+              />
+              <SelectControl
+                name="Gender"
+                label="Gender*"
+                value={values.Gender}
+                onChange={handleInputChange}
+                options={
+                  singleStudent
+                    ? singleStudent.ddlGender
+                    : getCreateSingleStudentData
+                    ? getCreateSingleStudentData.ddlGender
+                    : gender
+                }
+                errors={errors.Gender}
+              />
+              <DatePickerControl
+                name="DOB"
+                label="Date Of Birth*"
+                value={values.DOB}
+                onChange={handleInputChange}
+                errors={errors.DOB}
+              />
+              <InputControl
+                name="PlaceOfBirth"
+                label="Place of Birth"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.PlaceOfBirth}
+                onChange={handleInputChange}
+              />
+              <InputControl
+                name="MobileNo"
+                label="Contact No.*"
+                value={values.MobileNo}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                onChange={handleInputChange}
+                type="number"
+                errors={errors.MobileNo}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="ImageUploaded"
+                // label="Select Profile Photo"
+                // value={values.ClassLocation}
+                // onChange={(e) => handleImage(e)}
+                onChange={(e) => fileValidation(e, setImage, setImgSrc)}
+                type="file"
+                // errors={errors.ClassLocation}
+              />
 
-          <img
-            src={
-              imgSrc
-                ? imgSrc
-                : singleStudent && `${API_URL}${singleStudent?.FullPath}`
-            }
-            height={200}
-            width={200}
-          />
-          <SelectControl
-            name="Nationality"
-            label="Nationality*"
-            value={values.Nationality}
-            onChange={handleInputChange}
-            options={
-              singleStudent
-                ? singleStudent.ddlNationality
-                : getCreateSingleStudentData
-                ? getCreateSingleStudentData.ddlNationality
-                : gender
-            }
-          />
-          <InputControl
-            name="EmailAddress"
-            label="Email Address*"
-            value={values.EmailAddress}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            type="email"
-            errors={errors.EmailAddress}
-          />
-        </Grid>
-      </Grid>
-      <h4>Guardian Details</h4>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="FatherName"
-            label="Father Name*"
-            value={values.FatherName}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.FatherName}
-          />
-          <InputControl
-            name="FatherContactNo"
-            label="Father Contact Number*"
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            value={values.FatherContactNo}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            type="number"
-            errors={errors.FatherContactNo}
-          />
-          <InputControl
-            name="FatherEmail"
-            label="Father Email Address"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.FatherEmail}
-            type="email"
-            onChange={handleInputChange}
-            errors={errors.FatherEmail}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            name="LocalGuardianName"
-            label="Local Guardian Name*"
-            value={values.LocalGuardianName}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.LocalGuardianName}
-          />
+              <img
+                src={
+                  imgSrc
+                    ? imgSrc
+                    : singleStudent && `${API_URL}${singleStudent?.FullPath}`
+                }
+                height={200}
+                width={200}
+              />
+              <SelectControl
+                name="Nationality"
+                label="Nationality*"
+                value={values.Nationality}
+                onChange={handleInputChange}
+                options={
+                  singleStudent
+                    ? singleStudent.ddlNationality
+                    : getCreateSingleStudentData
+                    ? getCreateSingleStudentData.ddlNationality
+                    : gender
+                }
+              />
+              <InputControl
+                name="EmailAddress"
+                label="Email Address*"
+                value={values.EmailAddress}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                type="email"
+                errors={errors.EmailAddress}
+              />
+            </Grid>
+          </Grid>
+          <h4>Guardian Details</h4>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="FatherName"
+                label="Father Name*"
+                value={values.FatherName}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.FatherName}
+              />
+              <InputControl
+                name="FatherContactNo"
+                label="Father Contact Number*"
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                value={values.FatherContactNo}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                type="number"
+                errors={errors.FatherContactNo}
+              />
+              <InputControl
+                name="FatherEmail"
+                label="Father Email Address"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.FatherEmail}
+                type="email"
+                onChange={handleInputChange}
+                errors={errors.FatherEmail}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="LocalGuardianName"
+                label="Local Guardian Name*"
+                value={values.LocalGuardianName}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.LocalGuardianName}
+              />
 
-          <InputControl
-            name="LocalGuardianContactNo"
-            label="SMS Number"
-            value={values.LocalGuardianContactNo}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            onChange={handleInputChange}
-            type="number"
-            // errors={errors.LocalGuardianContactNo}
-          />
+              <InputControl
+                name="LocalGuardianContactNo"
+                label="SMS Number"
+                value={values.LocalGuardianContactNo}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                onChange={handleInputChange}
+                type="number"
+                // errors={errors.LocalGuardianContactNo}
+              />
 
-          <InputControl
-            name="LocalGuardianEmail"
-            label="Email Address"
-            value={values.LocalGuardianEmail}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            type="email"
-            errors={errors.LocalGuardianEmail}
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <InputControl
+                name="LocalGuardianEmail"
+                label="Email Address"
+                value={values.LocalGuardianEmail}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                type="email"
+                errors={errors.LocalGuardianEmail}
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -763,12 +760,13 @@ const StudentRegistrationForm = ({
           color="primary"
           type="submit"
           disabled={active}
+          onCLick={handleSubmit}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 
