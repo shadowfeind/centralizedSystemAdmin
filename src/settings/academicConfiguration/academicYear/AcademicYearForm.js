@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +17,7 @@ import {
 } from "./AcademicYearActions";
 import DatePickerControl from "../../../components/controls/DatePickerControl";
 import { GET_ACADEMIC_YEAR_CHECK_RESET } from "./AcademicYearConstant";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDAcademicYear: 0,
@@ -153,101 +154,99 @@ const AcademicYearForm = ({ academicYear, selected, setOpenPopup }) => {
     }
   }, [academicYear]);
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="AcademicYearName"
-            label="Academic Year Name*"
-            value={values.AcademicYearName}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onBlur={(e) => dispatch(getAcademicYearCheckAction(e.target.value))}
-            onChange={handleInputChange}
-            errors={errors.AcademicYearName}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="AcademicYearName"
+                label="Academic Year Name*"
+                value={values.AcademicYearName}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onBlur={(e) =>
+                  dispatch(getAcademicYearCheckAction(e.target.value))
+                }
+                onChange={handleInputChange}
+                errors={errors.AcademicYearName}
+              />
 
-          <InputControl
-            name="AcademicYearCode"
-            label="Academic Year Code*"
-            value={values.AcademicYearCode}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.AcademicYearCode}
-          />
+              <InputControl
+                name="AcademicYearCode"
+                label="Academic Year Code*"
+                value={values.AcademicYearCode}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.AcademicYearCode}
+              />
 
-          <InputControl
-            name="AcademicYear"
-            label="Academic Year*"
-            value={values.AcademicYear}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.AcademicYear}
-          />
+              <InputControl
+                name="AcademicYear"
+                label="Academic Year*"
+                value={values.AcademicYear}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.AcademicYear}
+              />
 
-          <DatePickerControl
-            name="StartDate"
-            label="Start Date*"
-            value={values.StartDate}
-            onChange={handleInputChange}
-            errors={errors.StartDate}
-          />
+              <DatePickerControl
+                name="StartDate"
+                label="Start Date*"
+                value={values.StartDate}
+                onChange={handleInputChange}
+                errors={errors.StartDate}
+              />
 
-          <DatePickerControl
-            name="EndDate"
-            label="End Date*"
-            value={values.EndDate}
-            onChange={handleInputChange}
-            errors={errors.EndDate}
-          />
+              <DatePickerControl
+                name="EndDate"
+                label="End Date*"
+                value={values.EndDate}
+                onChange={handleInputChange}
+                errors={errors.EndDate}
+              />
 
-          <CheckBoxControl
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Academic Program:</FormLabel>
-            {errors.checkboxState && (
-              <h4 style={{ color: "red" }}>{errors.checkboxState}</h4>
-            )}
+              <CheckBoxControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Academic Program:</FormLabel>
+                {errors.checkboxState && (
+                  <h4 style={{ color: "red" }}>{errors.checkboxState}</h4>
+                )}
 
-            <FormGroup>
-              {selected
-                ? selected.map((item) => <p> {item.Name}</p>)
-                : available.map((item) => (
-                    <FormControlLabel
-                      key={item.$id}
-                      control={
-                        <Checkbox
-                          onChange={handleChangeCheckbox}
-                          value={item.Id}
+                <FormGroup>
+                  {selected
+                    ? selected.map((item) => <p> {item.Name}</p>)
+                    : available.map((item) => (
+                        <FormControlLabel
+                          key={item.$id}
+                          control={
+                            <Checkbox
+                              onChange={handleChangeCheckbox}
+                              value={item.Id}
+                            />
+                          }
+                          label={item.Name}
                         />
-                      }
-                      label={item.Name}
-                    />
-                  ))}
-            </FormGroup>
-          </FormControl>
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+                      ))}
+                </FormGroup>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -260,13 +259,14 @@ const AcademicYearForm = ({ academicYear, selected, setOpenPopup }) => {
           variant="contained"
           color="primary"
           type="submit"
+          onClick={handleSubmit}
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 
