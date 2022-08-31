@@ -238,7 +238,7 @@ const Header = () => {
                       </div>
                     )}
                     <div onClick={handleClick("top-end")}>
-                      <Badge color="secondary" badgeContent={2}>
+                      <Badge color="secondary">
                         {headerContent && (
                           <img
                             src={`${API_URL}${headerContent.FullPath}`}
