@@ -96,7 +96,7 @@ const Syllabus = () => {
     if (!allSyllabus) {
       dispatch(getAllSyllabusAction());
     }
-    if (allSyllabus) {
+    if (allSyllabus?.dbModelLst?.length > 0) {
       dispatch(getListSyllabusAction(allSyllabus.dbModelLst[0]?.Id));
     }
   }, [allSyllabus]);
