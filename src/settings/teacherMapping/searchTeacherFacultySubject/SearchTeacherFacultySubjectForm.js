@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import SelectControl from "../../../components/controls/SelectControl";
 import { putSearchTeacherFacSubAction } from "./SearchTeacherFacultySubjectActions";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDHRTeacherFacultySubjectMappingHeader: "",
@@ -67,65 +68,61 @@ const SearchTeacherFacultySubjectForm = ({
   }, [datas]);
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <SelectControl
-            name="IDTeacher"
-            label="Teacher"
-            value={values.IDTeacher}
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            options={datas ? datas.ddlTeacher : fillerArray}
-            errors={errors.IDTeacher}
-          />
-          <InputControl
-            name="Summary"
-            label="Summary"
-            value={values.Summary}
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            variant="outlined"
-            errors={errors.Summary}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <SelectControl
-            name="IDAcademicFacultySubjectLink"
-            label="Faculty Subject"
-            value={values.IDAcademicFacultySubjectLink}
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            options={datas ? datas?.ddlFacultySubject : fillerArray}
-            errors={errors.IDAcademicFacultySubjectLink}
-          />
-          <SelectControl
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            options={datas ? datas?.ddlIsActive : fillerArray}
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <SelectControl
+                name="IDTeacher"
+                label="Teacher"
+                value={values.IDTeacher}
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                options={datas ? datas.ddlTeacher : fillerArray}
+                errors={errors.IDTeacher}
+              />
+              <InputControl
+                name="Summary"
+                label="Summary"
+                value={values.Summary}
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                variant="outlined"
+                errors={errors.Summary}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <SelectControl
+                name="IDAcademicFacultySubjectLink"
+                label="Faculty Subject"
+                value={values.IDAcademicFacultySubjectLink}
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                options={datas ? datas?.ddlFacultySubject : fillerArray}
+                errors={errors.IDAcademicFacultySubjectLink}
+              />
+              <SelectControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                options={datas ? datas?.ddlIsActive : fillerArray}
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -140,11 +137,12 @@ const SearchTeacherFacultySubjectForm = ({
           type="submit"
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

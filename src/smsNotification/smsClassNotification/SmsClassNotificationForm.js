@@ -9,6 +9,7 @@ import {
   Checkbox,
   Button,
   Grid,
+  DialogContent,
 } from "@material-ui/core";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -16,6 +17,7 @@ import { useDispatch } from "react-redux";
 import InputControl from "../../components/controls/InputControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { postSmsClassNotificationAction } from "./SmsClassNotificationActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   IDClassNotification: 0,
@@ -145,133 +147,128 @@ const SmsClassNotificationForm = ({
   return (
     <>
       <h5>**only app users are shown**</h5>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            {errors.selectedStudents && (
-              <span style={{ color: "red" }}>{errors.selectedStudents}</span>
-            )}
-            <TableRow>
-              <StyledTableCell>Roll No. </StyledTableCell>
-              <StyledTableCell>Student Name </StyledTableCell>
-              <StyledTableCell>Batch </StyledTableCell>
-              <StyledTableCell style={{ textAlign: "right" }}>
-                <label>All</label>
-                <Checkbox
-                  checked={checked}
-                  onChange={(e) => handleAllChecked(e.target.checked)}
-                  color="primary"
-                />
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {lstStudents &&
-              lstStudents
-                .sort((a, b) => a.RollNo - b.RollNo)
-                .map((s) => (
-                  <StyledTableRow key={s.IDHREmployee}>
-                    <StyledTableCell component="th" scope="row">
-                      {s.RollNo}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {s.StudentName}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {s.AcademicYear}
-                    </StyledTableCell>
-                    <StyledTableCell
-                      component="th"
-                      scope="row"
-                      style={{ textAlign: "right" }}
-                    >
-                      <Checkbox
-                        checked={
-                          selectedStudents.filter(
-                            (x) => x.IDHREmployee === s.IDHREmployee
-                          ).length > 0
-                            ? true
-                            : false
-                        }
-                        onChange={(e) => handleChecked(e.target.checked, s)}
-                      />
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <div style={{ height: "30px" }}></div>
-      <Form onSubmit={handleSubmit}>
-        <Grid container style={{ fontSize: "12px" }}>
-          <Grid item xs={12}>
-            <InputControl
-              name="MessageHeading"
-              label="Message Heading"
-              value={values.MessageHeading}
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              onChange={handleInputChange}
-              errors={errors.MessageHeading}
-            />
+      <DialogContent>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              {errors.selectedStudents && (
+                <span style={{ color: "red" }}>{errors.selectedStudents}</span>
+              )}
+              <TableRow>
+                <StyledTableCell>Roll No. </StyledTableCell>
+                <StyledTableCell>Student Name </StyledTableCell>
+                <StyledTableCell>Batch </StyledTableCell>
+                <StyledTableCell style={{ textAlign: "right" }}>
+                  <label>All</label>
+                  <Checkbox
+                    checked={checked}
+                    onChange={(e) => handleAllChecked(e.target.checked)}
+                    color="primary"
+                  />
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {lstStudents &&
+                lstStudents
+                  .sort((a, b) => a.RollNo - b.RollNo)
+                  .map((s) => (
+                    <StyledTableRow key={s.IDHREmployee}>
+                      <StyledTableCell component="th" scope="row">
+                        {s.RollNo}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {s.StudentName}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {s.AcademicYear}
+                      </StyledTableCell>
+                      <StyledTableCell
+                        component="th"
+                        scope="row"
+                        style={{ textAlign: "right" }}
+                      >
+                        <Checkbox
+                          checked={
+                            selectedStudents.filter(
+                              (x) => x.IDHREmployee === s.IDHREmployee
+                            ).length > 0
+                              ? true
+                              : false
+                          }
+                          onChange={(e) => handleChecked(e.target.checked, s)}
+                        />
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div style={{ height: "30px" }}></div>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={12}>
+              <InputControl
+                name="MessageHeading"
+                label="Message Heading"
+                value={values.MessageHeading}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.MessageHeading}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputControl
+                name="MessageDescription"
+                label="Message Descriptions"
+                multiline
+                rows={4}
+                value={values.MessageDescription}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onKeyDown={(e) =>
+                  values.MessageDescription?.length > 159 &&
+                  e.key !== "Backspace" &&
+                  e.preventDefault()
+                }
+                onChange={handleInputChange}
+                errors={errors.MessageDescription}
+              />
+              <p style={{ paddingLeft: "10px" }}>
+                {" "}
+                {160 -
+                  (values.MessageDescription
+                    ? values?.MessageDescription?.length
+                    : 0)}{" "}
+                chars left{" "}
+              </p>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <InputControl
-              name="MessageDescription"
-              label="Message Descriptions"
-              multiline
-              rows={4}
-              value={values.MessageDescription}
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              onKeyDown={(e) =>
-                values.MessageDescription?.length > 159 &&
-                e.key !== "Backspace" &&
-                e.preventDefault()
-              }
-              onChange={handleInputChange}
-              errors={errors.MessageDescription}
-            />
-            <p style={{ paddingLeft: "10px" }}>
-              {" "}
-              {160 -
-                (values.MessageDescription
-                  ? values?.MessageDescription?.length
-                  : 0)}{" "}
-              chars left{" "}
-            </p>
-          </Grid>
-        </Grid>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            paddingTop: "10px",
-            marginTop: "10px",
-            borderTop: "1px solid #f3f3f3",
-          }}
+        </Form>
+      </DialogContent>
+      <DialogFooter>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => setOpenPopup(false)}
+          style={{ margin: "10px 0 0 10px" }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenPopup(false)}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={active}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            {active ? "PROCESSING" : "SUBMIT"}
-          </Button>
-        </div>
-      </Form>
+          CANCEL
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={active}
+          onClick={handleSubmit}
+          style={{ margin: "10px 0 0 10px" }}
+        >
+          {active ? "PROCESSING" : "SUBMIT"}
+        </Button>
+      </DialogFooter>
     </>
   );
 };

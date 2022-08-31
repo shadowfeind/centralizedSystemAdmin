@@ -12,12 +12,14 @@ import {
   FormControl,
   InputLabel,
   Select,
+  DialogContent,
 } from "@material-ui/core";
 import "./AssignEcaForm.css";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { useDispatch } from "react-redux";
 import { postAssignEcaAction } from "./AssignEcaActions";
+import DialogFooter from "../../../components/DialogFooter";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -106,56 +108,60 @@ const AssignEcaForm = ({
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>ECA Name</StyledTableCell>
-              <StyledTableCell>ECA Description</StyledTableCell>
-              <StyledTableCell>Created_On</StyledTableCell>
-              <StyledTableCell>Updated_On</StyledTableCell>
-              <StyledTableCell>
-                {" "}
-                <label>All</label>
-                <Checkbox
-                  checked={checked}
-                  color="primary"
-                  onChange={(e) => handleAllChecked(e.target.checked)}
-                />
-              </StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {assignEca &&
-              assignEca.map((subject, key) => (
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    {subject.ECAName}
-                  </StyledTableCell>
-                  <StyledTableCell>{subject.ECADescription}</StyledTableCell>
-                  <StyledTableCell>
-                    {subject.Created_On?.slice(0, 10)}
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    {subject.Updated_On?.slice(0, 10)}
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <Checkbox
-                      checked={
-                        assign.filter((x) => x.IDECA === subject.IDECA).length >
-                        0
-                          ? true
-                          : false
-                      }
-                      color="primary"
-                      onChange={(e) => handleChecked(e.target.checked, subject)}
-                    />
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <DialogContent>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>ECA Name</StyledTableCell>
+                <StyledTableCell>ECA Description</StyledTableCell>
+                <StyledTableCell>Created_On</StyledTableCell>
+                <StyledTableCell>Updated_On</StyledTableCell>
+                <StyledTableCell>
+                  {" "}
+                  <label>All</label>
+                  <Checkbox
+                    checked={checked}
+                    color="primary"
+                    onChange={(e) => handleAllChecked(e.target.checked)}
+                  />
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {assignEca &&
+                assignEca.map((subject, key) => (
+                  <StyledTableRow>
+                    <StyledTableCell component="th" scope="row">
+                      {subject.ECAName}
+                    </StyledTableCell>
+                    <StyledTableCell>{subject.ECADescription}</StyledTableCell>
+                    <StyledTableCell>
+                      {subject.Created_On?.slice(0, 10)}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      {subject.Updated_On?.slice(0, 10)}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      <Checkbox
+                        checked={
+                          assign.filter((x) => x.IDECA === subject.IDECA)
+                            .length > 0
+                            ? true
+                            : false
+                        }
+                        color="primary"
+                        onChange={(e) =>
+                          handleChecked(e.target.checked, subject)
+                        }
+                      />
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </DialogContent>
       {assignEca?.length <= 0 && (
         <div>
           <h3 style={{ color: "red", textAlign: "center" }}>No Data Found</h3>
@@ -176,15 +182,8 @@ const AssignEcaForm = ({
       <div style={{ textAlign: "center", color: "red", fontSize: "14px" }}>
         {errors && errors.ecaError}
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -203,7 +202,7 @@ const AssignEcaForm = ({
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
+      </DialogFooter>
     </>
   );
 };

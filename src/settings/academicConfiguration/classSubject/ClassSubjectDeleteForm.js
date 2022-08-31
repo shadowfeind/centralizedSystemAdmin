@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch } from "react-redux";
 import { deleteClassSubjectAction } from "./ClassSubjectActions";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDClassSubject: 0,
@@ -34,38 +35,34 @@ const ClassSubjectDeleteForm = ({ deleteClassSubject, setOpenDeletePopup }) => {
     }
   }, [deleteClassSubject]);
   return (
-    <Form onSubmit={handleDelete}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            disabled
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            variant="filled"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            disabled
-            name="CreditHour"
-            label="Credit Hour"
-            onChange={handleInputChange}
-            value={values.CreditHour}
-            type="number"
-            variant="outlined"
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+    <>
+      <DialogContent>
+        <Form onSubmit={handleDelete}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                disabled
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                variant="filled"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                disabled
+                name="CreditHour"
+                label="Credit Hour"
+                onChange={handleInputChange}
+                value={values.CreditHour}
+                type="number"
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -80,11 +77,12 @@ const ClassSubjectDeleteForm = ({ deleteClassSubject, setOpenDeletePopup }) => {
           type="submit"
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
+          onClick={handleDelete}
         >
           {active ? "PROCESSING" : "DELETE"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

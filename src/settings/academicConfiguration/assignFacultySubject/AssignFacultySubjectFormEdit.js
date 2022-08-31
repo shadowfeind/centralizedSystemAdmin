@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch } from "react-redux";
 import { academicFacultySubjectPostEditAction } from "./AssignFacultySubjectActions";
 import { symbolsArrPhoneDot } from "../../../helpers/excludeSymbol";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDAcademicFacultySubjectLink: 0,
@@ -70,108 +71,104 @@ const AssignFacultySubjectFormEdit = ({
   const symbolsArr = ["e", "E", "+", "-", ".", "ArrowUp", "ArrowDown"];
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            disabled
-            name="SubjectName"
-            label="Subject Name"
-            value={values.SubjectName}
-            variant="filled"
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                disabled
+                name="SubjectName"
+                label="Subject Name"
+                value={values.SubjectName}
+                variant="filled"
+              />
 
-          <InputControl
-            disabled
-            name="SubjectCode"
-            label="Subject Code"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.SubjectCode}
-            variant="filled"
-          />
-          <InputControl
-            disabled
-            name="IsOptional"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            label="Mark As Optional"
-            value={values.IsOptional}
-            variant="filled"
-          />
-          <InputControl
-            disabled
-            name="IsTheoritical"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            label="Mark As Theoritical"
-            value={values.IsTheoritical}
-            variant="filled"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            disabled
-            name="SubjectDescription"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            label="Subject Description"
-            value={values.SubjectDescription}
-            variant="filled"
-          />
-          <InputControl
-            disabled
-            name="IsCompulsory"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            label="Mark As Compulsory"
-            value={values.IsCompulsory}
-            variant="filled"
-          />
-          <InputControl
-            disabled
-            name="IsPractical"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            label="Mark As Practical"
-            value={values.IsPractical}
-            variant="filled"
-          />
-          <InputControl
-            name="CreditHour"
-            label="Credit Hour"
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhoneDot.includes(e.key) && e.preventDefault()
-            }
-            value={values.CreditHour}
-            type="number"
-            variant="outlined"
-            required
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <InputControl
+                disabled
+                name="SubjectCode"
+                label="Subject Code"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.SubjectCode}
+                variant="filled"
+              />
+              <InputControl
+                disabled
+                name="IsOptional"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                label="Mark As Optional"
+                value={values.IsOptional}
+                variant="filled"
+              />
+              <InputControl
+                disabled
+                name="IsTheoritical"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                label="Mark As Theoritical"
+                value={values.IsTheoritical}
+                variant="filled"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                disabled
+                name="SubjectDescription"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                label="Subject Description"
+                value={values.SubjectDescription}
+                variant="filled"
+              />
+              <InputControl
+                disabled
+                name="IsCompulsory"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                label="Mark As Compulsory"
+                value={values.IsCompulsory}
+                variant="filled"
+              />
+              <InputControl
+                disabled
+                name="IsPractical"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                label="Mark As Practical"
+                value={values.IsPractical}
+                variant="filled"
+              />
+              <InputControl
+                name="CreditHour"
+                label="Credit Hour"
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhoneDot.includes(e.key) && e.preventDefault()
+                }
+                value={values.CreditHour}
+                type="number"
+                variant="outlined"
+                required
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -186,11 +183,12 @@ const AssignFacultySubjectFormEdit = ({
           type="submit"
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

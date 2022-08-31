@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import {
   holidayCreateAction,
   updateSingleHoliadyAction,
 } from "./HolidayActions";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDHRHoliday: 0,
@@ -87,65 +88,61 @@ const HolidayForm = ({ holiday, setOpenPopup, startDate, endDate }) => {
     setValues((prev) => ({ ...prev, FromDate: startDate, ToDate: endDate }));
   }, []);
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="HolidayName"
-            label="Holiday Name*"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.HolidayName}
-            onChange={handleInputChange}
-            errors={errors.HolidayName}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="HolidayName"
+                label="Holiday Name*"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.HolidayName}
+                onChange={handleInputChange}
+                errors={errors.HolidayName}
+              />
 
-          <DatePickerControl
-            name="FromDate"
-            label="FromDate"
-            value={startDate ? startDate : values.FromDate}
-            onChange={handleInputChange}
-            errors={errors.FromDate}
-          />
-          <CheckBoxControl
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            name="Description"
-            label="Description*"
-            multiline
-            rows={3}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.Description}
-            onChange={handleInputChange}
-            errors={errors.Description}
-          />
-          <DatePickerControl
-            name="ToDate"
-            label="ToDate"
-            value={endDate ? endDate : values.ToDate}
-            onChange={handleInputChange}
-            errors={errors.ToDate}
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <DatePickerControl
+                name="FromDate"
+                label="FromDate"
+                value={startDate ? startDate : values.FromDate}
+                onChange={handleInputChange}
+                errors={errors.FromDate}
+              />
+              <CheckBoxControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="Description"
+                label="Description*"
+                multiline
+                rows={3}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.Description}
+                onChange={handleInputChange}
+                errors={errors.Description}
+              />
+              <DatePickerControl
+                name="ToDate"
+                label="ToDate"
+                value={endDate ? endDate : values.ToDate}
+                onChange={handleInputChange}
+                errors={errors.ToDate}
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -160,11 +157,12 @@ const HolidayForm = ({ holiday, setOpenPopup, startDate, endDate }) => {
           type="submit"
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

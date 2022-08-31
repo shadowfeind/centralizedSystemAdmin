@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import DatePickerControl from "../../../components/controls/DatePickerControl";
 import SelectControl from "../../../components/controls/SelectControl";
 import { updateSingleStudentAction } from "./StudentProfileActions";
 import { symbolsArrPhone } from "../../../helpers/excludeSymbol";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDHREmployee: 0,
@@ -179,183 +180,179 @@ const StudentProfileForm = ({ studentData, setOpenPopup }) => {
   const symbolsArr = ["e", "E", "+", "-", ".", "ArrowUp", "ArrowDown"];
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="LoginIDHREmployee"
-            label="Login ID*"
-            disabled
-            value={values.LoginIDHREmployee}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.LoginIDHREmployee}
-          />
-          <InputControl
-            name="FirstName"
-            label="First Name*"
-            value={values.FirstName}
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            errors={errors.FirstName}
-          />
-          <InputControl
-            name="LastName"
-            label="Last Name"
-            value={values.LastName}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.LastName}
-          />
-          <InputControl
-            name="EmailID"
-            label="Email Address"
-            value={values.EmailID}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.EmailID}
-          />
-          <InputControl
-            name="BloodGroup"
-            label="Blood Group"
-            value={values.BloodGroup}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.BloodGroup}
-          />
-          <InputControl
-            name="UniversityRegistrationNumber"
-            label="Symbol No"
-            value={values.UniversityRegistrationNumber}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.UniversityRegistrationNumber}
-          />
-          <SelectControl
-            name="Sex"
-            label="Gender"
-            value={values.Sex}
-            onChange={handleInputChange}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            options={gender}
-            errors={errors.Sex}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="LoginIDHREmployee"
+                label="Login ID*"
+                disabled
+                value={values.LoginIDHREmployee}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.LoginIDHREmployee}
+              />
+              <InputControl
+                name="FirstName"
+                label="First Name*"
+                value={values.FirstName}
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                errors={errors.FirstName}
+              />
+              <InputControl
+                name="LastName"
+                label="Last Name"
+                value={values.LastName}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.LastName}
+              />
+              <InputControl
+                name="EmailID"
+                label="Email Address"
+                value={values.EmailID}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.EmailID}
+              />
+              <InputControl
+                name="BloodGroup"
+                label="Blood Group"
+                value={values.BloodGroup}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.BloodGroup}
+              />
+              <InputControl
+                name="UniversityRegistrationNumber"
+                label="Symbol No"
+                value={values.UniversityRegistrationNumber}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.UniversityRegistrationNumber}
+              />
+              <SelectControl
+                name="Sex"
+                label="Gender"
+                value={values.Sex}
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                options={gender}
+                errors={errors.Sex}
+              />
 
-          <SelectControl
-            name="WebLoginAccess"
-            label="Web Login Access"
-            value={values.WebLoginAccess}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            options={loginAccess}
-            errors={errors.WebLoginAccess}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            name="MiddleName"
-            label="Middle Name"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.MiddleName}
-            onChange={handleInputChange}
-          />
-          <DatePickerControl
-            name="DOB"
-            label="Date Of Birth"
-            value={values.DOB}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.DOB}
-          />
-          <InputControl
-            name="MobileNumber"
-            label="Mobile Number"
-            value={values.MobileNumber}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            type="number"
-            errors={errors.MobileNumber}
-          />
-          <InputControl
-            name="OtherNumber"
-            label="Other Number"
-            value={values.OtherNumber}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            onChange={handleInputChange}
-            type="number"
-          />
-          <InputControl
-            name="RollNo"
-            label="Roll No"
-            type="number"
-            value={values.RollNo}
-            onWheelCapture={(e) => {
-              e.target.blur();
-            }}
-            onKeyDown={(e) =>
-              symbolsArrPhone.includes(e.key) && e.preventDefault()
-            }
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onChange={handleInputChange}
-            errors={errors.RollNo}
-          />
+              <SelectControl
+                name="WebLoginAccess"
+                label="Web Login Access"
+                value={values.WebLoginAccess}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                options={loginAccess}
+                errors={errors.WebLoginAccess}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="MiddleName"
+                label="Middle Name"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.MiddleName}
+                onChange={handleInputChange}
+              />
+              <DatePickerControl
+                name="DOB"
+                label="Date Of Birth"
+                value={values.DOB}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.DOB}
+              />
+              <InputControl
+                name="MobileNumber"
+                label="Mobile Number"
+                value={values.MobileNumber}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                type="number"
+                errors={errors.MobileNumber}
+              />
+              <InputControl
+                name="OtherNumber"
+                label="Other Number"
+                value={values.OtherNumber}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                onChange={handleInputChange}
+                type="number"
+              />
+              <InputControl
+                name="RollNo"
+                label="Roll No"
+                type="number"
+                value={values.RollNo}
+                onWheelCapture={(e) => {
+                  e.target.blur();
+                }}
+                onKeyDown={(e) =>
+                  symbolsArrPhone.includes(e.key) && e.preventDefault()
+                }
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onChange={handleInputChange}
+                errors={errors.RollNo}
+              />
 
-          <SelectControl
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-            options={studentData ? studentData.ddlIsActive : test}
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <SelectControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                options={studentData ? studentData.ddlIsActive : test}
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -370,11 +367,12 @@ const StudentProfileForm = ({ studentData, setOpenPopup }) => {
           type="submit"
           disabled={active}
           style={{ margin: "10px 0 0 10px" }}
+          onClick={handleSubmit}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

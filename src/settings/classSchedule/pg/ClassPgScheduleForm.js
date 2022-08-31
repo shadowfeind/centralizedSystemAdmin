@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import SelectControl from "../../../components/controls/SelectControl";
 import { API_URL } from "../../../constants";
 import { putClassScheduleAction } from "./ClassPgScheduleActions";
 import fileValidation from "../../../helpers/fileValidation";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   Id: 1,
@@ -52,41 +53,39 @@ const ClassPgScheduleForm = ({ schedule, setOpenPopup }) => {
     }
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <SelectControl
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-            options={schedule ? schedule.ddlIsActive : test}
-          />
-          <InputControl
-            name="ImageUploaded"
-            // label="Select File"
-            onChange={(e) => fileValidation(e, setImage, setImgSrc)}
-            type="file"
-            // errors={errors.img}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <SelectControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                options={schedule ? schedule.ddlIsActive : test}
+              />
+              <InputControl
+                name="ImageUploaded"
+                // label="Select File"
+                onChange={(e) => fileValidation(e, setImage, setImgSrc)}
+                type="file"
+                // errors={errors.img}
+              />
 
-          <img
-            src={imgSrc ? imgSrc : schedule && `${API_URL}${schedule.FullPath}`}
-            height={200}
-            width={200}
-          />
-        </Grid>
-        <Grid item xs={6}></Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <img
+                src={
+                  imgSrc ? imgSrc : schedule && `${API_URL}${schedule.FullPath}`
+                }
+                height={200}
+                width={200}
+              />
+            </Grid>
+            <Grid item xs={6}></Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -100,12 +99,13 @@ const ClassPgScheduleForm = ({ schedule, setOpenPopup }) => {
           color="primary"
           type="submit"
           disabled={active}
+          onClick={handleSubmit}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

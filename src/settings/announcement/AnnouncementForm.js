@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../components/controls/InputControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import {
   announcementCreateAction,
   updateSingleAnnouncementAction,
 } from "./AnnouncementAction";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   Id: 0,
@@ -77,67 +78,63 @@ const AnnouncementForm = ({
   //   }
   // }, [announcement]);
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={12}>
-          <InputControl
-            name="NewsHeading"
-            label="News Heading*"
-            onKeyDown={(e) =>
-              values.NewsHeading?.length > 160 && e.preventDefault()
-            }
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.NewsHeading}
-            onChange={handleInputChange}
-            errors={errors.NewsHeading}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputControl
-            name="NewsDescription"
-            label="News Description*"
-            multiline
-            rows={4}
-            value={values.NewsDescription}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onKeyDown={(e) =>
-              values.NewsDescription?.length > 159 &&
-              e.key !== "Backspace" &&
-              e.preventDefault()
-            }
-            onChange={handleInputChange}
-            errors={errors.NewsDescription}
-          />
-          <p style={{ paddingLeft: "10px" }}>
-            {" "}
-            {160 -
-              (values.NewsDescription
-                ? values?.NewsDescription?.length
-                : 0)}{" "}
-            chars left{" "}
-          </p>
-        </Grid>
-        <CheckBoxControl
-          name="IsActive"
-          label="IsActive"
-          value={values.IsActive}
-          onChange={handleInputChange}
-          errors={errors.IsActive}
-        />
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={12}>
+              <InputControl
+                name="NewsHeading"
+                label="News Heading*"
+                onKeyDown={(e) =>
+                  values.NewsHeading?.length > 160 && e.preventDefault()
+                }
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.NewsHeading}
+                onChange={handleInputChange}
+                errors={errors.NewsHeading}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputControl
+                name="NewsDescription"
+                label="News Description*"
+                multiline
+                rows={4}
+                value={values.NewsDescription}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onKeyDown={(e) =>
+                  values.NewsDescription?.length > 159 &&
+                  e.key !== "Backspace" &&
+                  e.preventDefault()
+                }
+                onChange={handleInputChange}
+                errors={errors.NewsDescription}
+              />
+              <p style={{ paddingLeft: "10px" }}>
+                {" "}
+                {160 -
+                  (values.NewsDescription
+                    ? values?.NewsDescription?.length
+                    : 0)}{" "}
+                chars left{" "}
+              </p>
+            </Grid>
+            <CheckBoxControl
+              name="IsActive"
+              label="IsActive"
+              value={values.IsActive}
+              onChange={handleInputChange}
+              errors={errors.IsActive}
+            />
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -151,12 +148,13 @@ const AnnouncementForm = ({
           color="primary"
           type="submit"
           disabled={active}
+          onCLick={handleSubmit}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

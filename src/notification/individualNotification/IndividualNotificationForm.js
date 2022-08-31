@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../components/controls/InputControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { useDispatch } from "react-redux";
 import CheckBoxControl from "../../components/controls/CheckBoxControl";
 import { postFcmAction } from "./IndividualNotificationActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const IndividualNotificationForm = ({ fcmTokenList, schoolName }) => {
   const dispatch = useDispatch();
@@ -64,60 +65,56 @@ const IndividualNotificationForm = ({ fcmTokenList, schoolName }) => {
   //   }
   // }, [announcement]);
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={12}>
-          <InputControl
-            name="NewsHeading"
-            label="News Heading*"
-            onKeyDown={(e) =>
-              values.NewsHeading?.length > 160 && e.preventDefault()
-            }
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            value={values.NewsHeading}
-            onChange={handleInputChange}
-            errors={errors.NewsHeading}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <InputControl
-            name="NewsDescription"
-            label="News Description*"
-            multiline
-            rows={4}
-            value={values.NewsDescription}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            onKeyDown={(e) =>
-              values.NewsDescription?.length > 159 &&
-              e.key !== "Backspace" &&
-              e.preventDefault()
-            }
-            onChange={handleInputsChange}
-            errors={errors.NewsDescription}
-          />
-          <p style={{ paddingLeft: "10px" }}>
-            {" "}
-            {160 -
-              (values.NewsDescription
-                ? values?.NewsDescription?.length
-                : 0)}{" "}
-            chars left{" "}
-          </p>
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={12}>
+              <InputControl
+                name="NewsHeading"
+                label="News Heading*"
+                onKeyDown={(e) =>
+                  values.NewsHeading?.length > 160 && e.preventDefault()
+                }
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.NewsHeading}
+                onChange={handleInputChange}
+                errors={errors.NewsHeading}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputControl
+                name="NewsDescription"
+                label="News Description*"
+                multiline
+                rows={4}
+                value={values.NewsDescription}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onKeyDown={(e) =>
+                  values.NewsDescription?.length > 159 &&
+                  e.key !== "Backspace" &&
+                  e.preventDefault()
+                }
+                onChange={handleInputsChange}
+                errors={errors.NewsDescription}
+              />
+              <p style={{ paddingLeft: "10px" }}>
+                {" "}
+                {160 -
+                  (values.NewsDescription
+                    ? values?.NewsDescription?.length
+                    : 0)}{" "}
+                chars left{" "}
+              </p>
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -131,12 +128,13 @@ const IndividualNotificationForm = ({ fcmTokenList, schoolName }) => {
           color="primary"
           type="submit"
           disabled={active}
+          omClick={handleSubmit}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 

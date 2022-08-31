@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import InputControl from "../../components/controls/InputControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { makeStyles } from "@material-ui/styles";
 import CheckBoxControl from "../../components/controls/CheckBoxControl";
 import { postSmsTeacherNotificationAction } from "./SmsTeacherNotificationActions";
+import DialogFooter from "../../components/DialogFooter";
 
 const initialFormValues = {
   IDTeacherNotification: 0,
@@ -68,82 +69,77 @@ const SmsTeacherNotificationForm = ({
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Grid container style={{ fontSize: "12px" }}>
-          <Grid item xs={12}>
-            <InputControl
-              name="MessageHeading"
-              label="Message Heading"
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              value={values.MessageHeading}
-              onChange={handleInputChange}
-              errors={errors.MessageHeading}
-            />
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={12}>
+              <InputControl
+                name="MessageHeading"
+                label="Message Heading"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                value={values.MessageHeading}
+                onChange={handleInputChange}
+                errors={errors.MessageHeading}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputControl
+                name="MessageDescription"
+                label="Message Descriptions"
+                multiline
+                rows={4}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                onKeyDown={(e) =>
+                  values.MessageDescription?.length > 159 &&
+                  e.key !== "Backspace" &&
+                  e.preventDefault()
+                }
+                value={values.MessageDescription}
+                onChange={handleInputChange}
+                errors={errors.MessageDescription}
+              />
+              <p style={{ paddingLeft: "10px" }}>
+                {" "}
+                {160 -
+                  (values.MessageDescription
+                    ? values?.MessageDescription?.length
+                    : 0)}{" "}
+                chars left{" "}
+              </p>
+              <CheckBoxControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <InputControl
-              name="MessageDescription"
-              label="Message Descriptions"
-              multiline
-              rows={4}
-              onFocus={(e) => {
-                e.target.select();
-              }}
-              onKeyDown={(e) =>
-                values.MessageDescription?.length > 159 &&
-                e.key !== "Backspace" &&
-                e.preventDefault()
-              }
-              value={values.MessageDescription}
-              onChange={handleInputChange}
-              errors={errors.MessageDescription}
-            />
-            <p style={{ paddingLeft: "10px" }}>
-              {" "}
-              {160 -
-                (values.MessageDescription
-                  ? values?.MessageDescription?.length
-                  : 0)}{" "}
-              chars left{" "}
-            </p>
-            <CheckBoxControl
-              name="IsActive"
-              label="IsActive"
-              value={values.IsActive}
-              onChange={handleInputChange}
-            />
-          </Grid>
-        </Grid>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            paddingTop: "10px",
-            marginTop: "10px",
-            borderTop: "1px solid #f3f3f3",
-          }}
+        </Form>
+      </DialogContent>
+      <DialogFooter>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => setOpenPopup(false)}
+          style={{ margin: "10px 0 0 10px" }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenPopup(false)}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={active}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            {active ? "PROCESSING" : "SUBMIT"}
-          </Button>
-        </div>
-      </Form>
+          CANCEL
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={active}
+          onCLick={handleSubmit}
+          style={{ margin: "10px 0 0 10px" }}
+        >
+          {active ? "PROCESSING" : "SUBMIT"}
+        </Button>
+      </DialogFooter>
     </>
   );
 };

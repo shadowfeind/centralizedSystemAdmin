@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../../components/controls/InputControl";
 import { useForm, Form } from "../../../customHooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import {
   postSmsAccessControlAction,
   putSmsAccessControlAction,
 } from "./SmsAccessControlActions";
+import DialogFooter from "../../../components/DialogFooter";
 
 const initialFormValues = {
   IDSMSControl: 0,
@@ -63,69 +64,64 @@ const SmsAccessControlForm = ({ smsCreate, setOpenPopup, smsEdit }) => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <Grid container style={{ fontSize: "12px" }}>
-          <Grid item xs={6}>
-            <SelectControl
-              name="SMSHeader"
-              label="SMS Header"
-              value={values.SMSHeader}
-              onChange={handleInputChange}
-              options={
-                smsEdit
-                  ? smsEdit.ddlSMSAccessControl
-                  : smsCreate
-                  ? smsCreate.ddlSMSAccessControl
-                  : test
-              }
-              errors={errors.SMSHeader}
-            />
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <SelectControl
+                name="SMSHeader"
+                label="SMS Header"
+                value={values.SMSHeader}
+                onChange={handleInputChange}
+                options={
+                  smsEdit
+                    ? smsEdit.ddlSMSAccessControl
+                    : smsCreate
+                    ? smsCreate.ddlSMSAccessControl
+                    : test
+                }
+                errors={errors.SMSHeader}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <SelectControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                options={
+                  smsEdit
+                    ? smsEdit.ddlIsActive
+                    : smsCreate
+                    ? smsCreate.ddlIsActive
+                    : test
+                }
+                errors={errors.IsActive}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <SelectControl
-              name="IsActive"
-              label="IsActive"
-              value={values.IsActive}
-              onChange={handleInputChange}
-              options={
-                smsEdit
-                  ? smsEdit.ddlIsActive
-                  : smsCreate
-                  ? smsCreate.ddlIsActive
-                  : test
-              }
-              errors={errors.IsActive}
-            />
-          </Grid>
-        </Grid>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "end",
-            paddingTop: "10px",
-            marginTop: "10px",
-            borderTop: "1px solid #f3f3f3",
-          }}
+        </Form>
+      </DialogContent>
+      <DialogFooter>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => setOpenPopup(false)}
+          style={{ margin: "10px 0 0 10px" }}
         >
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setOpenPopup(false)}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            CANCEL
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={active}
-            style={{ margin: "10px 0 0 10px" }}
-          >
-            {active ? "PROCESSING" : "SUBMIT"}
-          </Button>
-        </div>
-      </Form>
+          CANCEL
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={active}
+          onClick={handleSubmit}
+          style={{ margin: "10px 0 0 10px" }}
+        >
+          {active ? "PROCESSING" : "SUBMIT"}
+        </Button>
+      </DialogFooter>
     </>
   );
 };

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { Button, DialogContent, Grid } from "@material-ui/core";
 import InputControl from "../../components/controls/InputControl";
 import { useForm, Form } from "../../customHooks/useForm";
 import { useDispatch } from "react-redux";
 import fileValidation from "../../helpers/fileValidation";
 import SelectControl from "../../components/controls/SelectControl";
+import DialogFooter from "../../components/DialogFooter";
 import {
   getSingleCreateOldQuestionsAction,
   getSingleEditOldQuestionsAction,
@@ -103,78 +104,74 @@ const OldQuestionsForm = ({
   const test = [{ Key: "", Value: "" }];
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Grid container style={{ fontSize: "12px" }}>
-        <Grid item xs={6}>
-          <InputControl
-            name="OldQuestionName"
-            label="Old Question Name"
-            value={values.OldQuestionName}
-            variant="outlined"
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            errors={errors.OldQuestionName}
-            onChange={handleInputChange}
-          />
+    <>
+      <DialogContent>
+        <Form onSubmit={handleSubmit}>
+          <Grid container style={{ fontSize: "12px" }}>
+            <Grid item xs={6}>
+              <InputControl
+                name="OldQuestionName"
+                label="Old Question Name"
+                value={values.OldQuestionName}
+                variant="outlined"
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                errors={errors.OldQuestionName}
+                onChange={handleInputChange}
+              />
 
-          <InputControl
-            name="OldQuestionDescription"
-            label="Old Question Description"
-            value={values.OldQuestionDescription}
-            onFocus={(e) => {
-              e.target.select();
-            }}
-            variant="outlined"
-            errors={errors.OldQuestionDescription}
-            onChange={handleInputChange}
-          />
-          <SelectControl
-            name="IsActive"
-            label="IsActive"
-            value={values.IsActive}
-            onChange={handleInputChange}
-            options={
-              singleCreateOldQuestions
-                ? singleCreateOldQuestions.ddlIsActive
-                : singleEditOldQuestions
-                ? singleEditOldQuestions.ddlIsActive
-                : test
-            }
-            errors={errors.IsActive}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputControl
-            name="ImageUploaded"
-            // label="Select Profile Photo"
-            // value={values.DocumentFile}
-            onChange={(e) => fileValidation(e, setImage, setImgSrc)}
-            type="file"
-            // errors={errors.image}
-          />
+              <InputControl
+                name="OldQuestionDescription"
+                label="Old Question Description"
+                value={values.OldQuestionDescription}
+                onFocus={(e) => {
+                  e.target.select();
+                }}
+                variant="outlined"
+                errors={errors.OldQuestionDescription}
+                onChange={handleInputChange}
+              />
+              <SelectControl
+                name="IsActive"
+                label="IsActive"
+                value={values.IsActive}
+                onChange={handleInputChange}
+                options={
+                  singleCreateOldQuestions
+                    ? singleCreateOldQuestions.ddlIsActive
+                    : singleEditOldQuestions
+                    ? singleEditOldQuestions.ddlIsActive
+                    : test
+                }
+                errors={errors.IsActive}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <InputControl
+                name="ImageUploaded"
+                // label="Select Profile Photo"
+                // value={values.DocumentFile}
+                onChange={(e) => fileValidation(e, setImage, setImgSrc)}
+                type="file"
+                // errors={errors.image}
+              />
 
-          <img
-            src={
-              imgSrc
-                ? imgSrc
-                : singleEditOldQuestions &&
-                  `${API_URL}${singleEditOldQuestions.FullPath}`
-            }
-            height={200}
-            width={200}
-          />
-        </Grid>
-      </Grid>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingTop: "10px",
-          marginTop: "10px",
-          borderTop: "1px solid #f3f3f3",
-        }}
-      >
+              <img
+                src={
+                  imgSrc
+                    ? imgSrc
+                    : singleEditOldQuestions &&
+                      `${API_URL}${singleEditOldQuestions.FullPath}`
+                }
+                height={200}
+                width={200}
+              />
+            </Grid>
+          </Grid>
+        </Form>
+      </DialogContent>
+      <DialogFooter>
         <Button
           variant="contained"
           color="secondary"
@@ -188,12 +185,13 @@ const OldQuestionsForm = ({
           color="primary"
           type="submit"
           disabled={active}
+          onClick={handleSubmit}
           style={{ margin: "10px 0 0 10px" }}
         >
           {active ? "PROCESSING" : "SUBMIT"}
         </Button>
-      </div>
-    </Form>
+      </DialogFooter>
+    </>
   );
 };
 
