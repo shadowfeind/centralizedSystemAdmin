@@ -8,10 +8,13 @@ const AdmitCardDesign = ({
   imagePath,
   headerBanners,
   classname,
+  section,
   examDate,
+  examEndDate,
   principleSignature,
   year,
   dateValue,
+  // enddateValue,
   yearDdl,
 }) => {
   const studentImage = imagePath?.filter((x) => x.Key === student.IDHREmployee);
@@ -36,14 +39,22 @@ const AdmitCardDesign = ({
                   <strong>Name:</strong> {student.FullName}
                 </h5>
                 <h5>
-                  <strong>Class:</strong> {classname}
+                  <strong>Class / Section:</strong> {classname} {section && "/"}
+                  {" "}
+                  {section}
                 </h5>
                 <h5>
-                  <strong>Symbol No:</strong>{" "}
+                  <strong>Roll No / Symbol No:</strong>
+                  {student.RollNo} {student.UniversityRegistrationNumber && "/"}
+                  {" "}
                   {student.UniversityRegistrationNumber}
                 </h5>
                 <h5>
-                  <strong>Exam Date:</strong> {dateValue}
+                  <strong>Exam Start-Date:</strong> {examDate}
+                </h5>
+
+                <h5>
+                  <strong>Exam End-Date:</strong> {examEndDate}
                 </h5>
               </Grid>
               <Grid item xs={4}>

@@ -7,7 +7,9 @@ const PrintAdminCardPrint = ({
   students,
   imagePath,
   classname,
+  section,
   examDate,
+  examEndDate,
   print,
   headerBanners,
   principleSignature,
@@ -15,6 +17,7 @@ const PrintAdminCardPrint = ({
   year,
   yearDdl,
   dateValue,
+  // enddateValue,
   setOpenPopup,
 }) => {
   return (
@@ -29,11 +32,14 @@ const PrintAdminCardPrint = ({
                   student={student}
                   imagePath={imagePath}
                   classname={classname}
+                  section={section}
                   examDate={examDate}
+                  examEndDate={examEndDate}
                   headerBanners={headerBanners}
                   principleSignature={principleSignature}
                   year={year}
                   dateValue={dateValue}
+                  // enddateValue={enddateValue}
                   yearDdl={yearDdl}
                 />
               </Grid>
