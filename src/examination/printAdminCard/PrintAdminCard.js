@@ -93,7 +93,9 @@ const PrintAdminCard = () => {
   const [event, setEvent] = useState("");
   const [student, setStudent] = useState(0);
   const [date, setDate] = useState();
+  const [enddate, setEndDate] = useState();
   const [dateValue, setDateValue] = useState();
+  const [enddateValue, setEndDateValue] = useState();
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -228,6 +230,9 @@ const PrintAdminCard = () => {
       setSection(admitCardInitialData?.searchFilterModel.ddlSection[0]?.Key);
       setDateValue(
         admitCardInitialData?.searchFilterModel?.StartDate?.slice(0, 10)
+      );
+      setEndDateValue(
+        admitCardInitialData?.searchFilterModel?.EndDate?.slice(0, 10)
       );
       dispatch(
         getEventAction(
@@ -388,6 +393,14 @@ const PrintAdminCard = () => {
     }
   };
 
+  const handleEndDate = (date) => {
+    if (date) {
+      setEndDateValue(date);
+      const newEndDate = `${date.getMonth()}-${date.getDay()}-${date.getFullYear()}`;
+      setEndDate(newEndDate);
+    }
+  };
+
   const handleBulkPrint = () => {
     if (validate()) {
       dispatch(
@@ -399,7 +412,8 @@ const PrintAdminCard = () => {
           shift,
           event,
           student,
-          date
+          date,
+          
         )
       );
       setOpenPopup(true);
@@ -523,6 +537,26 @@ const PrintAdminCard = () => {
             </Grid>
 
             <Grid item xs={3}>
+              <div style={{ height: "10px" }}></div>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  inputVariant="outlined"
+                  format="dd-MM-yyyy"
+                  name="DOJ"
+                  label="Pick Exam End Date"
+                  value={enddateValue}
+                  onChange={(e) => {
+                    const newEndDate = new Date(e);
+                    console.log(newEndDate.toLocaleDateString()?.slice(0, 10));
+                    handleEndDate(newEndDate.toLocaleDateString()?.slice(0, 10));
+                  }}
+                />
+              </MuiPickersUtilsProvider>
+            </Grid>
+
+            <Grid item xs={3}>
               <Button
                 variant="contained"
                 color="primary"
@@ -599,9 +633,15 @@ const PrintAdminCard = () => {
               classname={
                 printStudentsAdmitCard && printStudentsAdmitCard.ClassName
               }
+              section={
+                printStudentsAdmitCard && printStudentsAdmitCard.SectionName
+              }
               examDate={
-                admitCardInitialData &&
-                admitCardInitialData?.searchFilterModel?.StartDate
+                dateValue
+              }
+
+              examEndDate={
+                enddateValue
               }
               principleSignature={principleSignature && principleSignature}
               print={printPdf}
